@@ -89,7 +89,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 * Test   : Test with WordPress version 6.8 #956
 
 = 1.7.77 (13 March 2025) =
-* Added  : Whitelabel For PWA (pro extension) #693
 * Feature : Swipe left / right to load next and previous article #567
 * Improvement  : update setting UI #697
 * Improvement  : Readme update with new feature list #945
@@ -98,7 +97,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 * Bug Fixed  : PWA Installation Instructions Persist After Install & Cancel CTA Still Triggers Installation #951
 
 = 1.7.76 (31 December 2024) =
-* Added  : PWA to ios as a service (pro extension)#693
 * Improvement  : Make a feature to force load the "pwa-non-amp-install" specific parameter URL. #932
 * Bug Fixed  : Offline form feature not working in IOS. #937
 * Improvement  : Scroll Progress Bar is not showing when PWA display mode is fullscreen #943
@@ -188,11 +186,9 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 
 = 1.7.62 (14 Sept 2023) =
 * Bug Fixed  : Push notification is not working on IOS. #66
-* Bug Fixed  : Need to put a proper display message on license activation/deactivation timeout #831
 * Bug Fixed  : The messages do not redirect when the extension Buddypress for PWAforWP is activated on the user-end #839
 * Feature Added  : Need to create a feature for Role managers #824
 * Feature Added  : Need to add support to display badge on mobile PWA icon #821
-* Feature Added  : Need to add a new feature for BuddyPress Group Notification in buddypress for PWAforWP pro extension #841
 
 = 1.7.61 (01 Sept 2023) =
 * Bug Fixed  : QR code activation issue #827
@@ -222,7 +218,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 = 1.7.57 (18 March 2023) =
 * Bug Fixed  : Download button href changing into link attribute on click #790
 * Bug Fixed  : Rewrite rules are being flush on every page load #765
-* Bug Fixed  : Undefined function "pwaforwp_t_string" and undefined variable "pwaforwp_addon_license_info" #796
 
 = 1.7.56 (16 February 2023) =
 * Improvement: Code Improvement as per WP guidlines #787
@@ -281,7 +276,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 
 = 1.7.46 (23 April 2022) =
 * Bug Fixed		: Fixed loader issue in IOS, desktop, mobile, admin, and only PWA #703, #700
-* Bug Fixed		: Improvement when license is expired #696
 * Bug Fixed		: Added option to add screenshots in manifest #694
 
 = 1.7.45 (15 April 2022) =
@@ -403,7 +397,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 * Bug Fixed     : AMP Pages/post (Automattic) is getting blank page, when Loader feature is enabled #528
 * Improvement 	: Added a option for loader background color change. #533
 * Improvement 	: Issue with the Loading Icon alignment. #535
-* Improvement 	: Hide license key of addons #530
 
 = 1.7.20 (17 SEPTEMBER 2020) =
 * Improvement   : Improved the UI of features section #462
@@ -604,7 +597,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 * Improved : Added "apple-touch-startup-image" icon and cache the image previously to load fast For IOS devices #212
 * Improved : Pre-caching list automated now. On publish post precache list will be updated #215
 * Bug Fixed: Enable/Disable checkbox of the PWA on AMP or Non-AMP #216
-* Bug Fixed: Fixed the license key error while activating Loading Icon Plugins #218
 
 = 1.7.1 (12 October 2019) =
 * Improved: UX design of option panel #203

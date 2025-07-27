@@ -444,11 +444,11 @@ class PWAforwp_File_Creation {
     }else{
       $offline_page 		= user_trailingslashit( $settings['offline_page_other'] ?  pwaforwp_https( $settings['offline_page_other'] ) :  pwaforwp_home_url());
     }
-    $pro_extension_exists = function_exists('pwaforwp_is_any_extension_active')?pwaforwp_is_any_extension_active():false;
+    $pro_extension_exists = false;
     if($settings['404_page']!='other'){
       $page404 		= user_trailingslashit(get_permalink( $settings['404_page'] ) ?  pwaforwp_https(get_permalink( $settings['404_page'] ))  :  pwaforwp_home_url());
     }else {
-      $page404 		= ($pro_extension_exists && user_trailingslashit(get_permalink( $settings['404_page'] )) ?  pwaforwp_https(esc_url( $settings['404_page_other'] ))  :  pwaforwp_home_url());
+    $pro_extension_exists = false;
     }
 
 		$cacheTimerHtml = 3600; $cacheTimerCss = 86400;
@@ -642,7 +642,7 @@ class PWAforwp_File_Creation {
           $scope_url = pwaforwp_home_url();//Scope Url should be serving url      
         }
 
-        $pro_extension_exists = function_exists('pwaforwp_is_any_extension_active')?pwaforwp_is_any_extension_active():false;
+        $pro_extension_exists = false;
         if($pro_extension_exists && isset( $defaults['start_page'] ) && $defaults['start_page'] == 'active_url'){
           if ($pageid) {
             $permalink = get_permalink($pageid);

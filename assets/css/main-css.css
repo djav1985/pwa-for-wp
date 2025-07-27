@@ -907,24 +907,6 @@ input:checked+.pwaforwp_slider:before {
     right: 5px;
     margin-left: 4px;
 }
-.pwaforwp_pro_icon:before {
-    content: "\f147";
-    background: #388e3c;
-    border-radius: 40px;
-    color: #fff;
-    position: relative;
-    left: 1px;
-    border-radius: 40px;
-    padding: 1px 1px 0 0;
-    top: 1px;
-    margin: 0;
-    font-size: 14px;
-}
-.pwaforwp_pro_icon {
-    margin: 0;
-    font-size: 16px;
-    margin-left: 3px;
-    margin-top: 1px;
     right: 5px;
 }
 .pwaforwp_expiredinner_span {
@@ -1053,9 +1035,6 @@ span#pwaforwp-addon-pwaforwp-dashicons-no {
     position: relative;
     display: block;
 }
-span.pwaforwp_addon_icon.dashicons.dashicons-yes.pwaforwp_pro_icon {
-    top: 0;
-    position: relative;
 }
 p#pwaforwp_enter_key_Reviews {
     position: relative;
@@ -1071,7 +1050,6 @@ label.pwaforwp-sts-txt {
 }
 p#pwaforwp_enter_key_woocommerce {
     position: relative;
-    top: 20px;
 }
 input.pwaforwp_license_key_input_active::placeholder {
     color: #000;

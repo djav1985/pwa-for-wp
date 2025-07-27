@@ -303,7 +303,7 @@ function pwaforwp_add_rewrite_rules() {
 function pwaforwp_setup_hooks() {
 
     $defaults = pwaforwp_defaultSettings();
-    $pro_extension_exists = function_exists('pwaforwp_is_any_extension_active')?pwaforwp_is_any_extension_active():false;
+    $pro_extension_exists = false;
 
     if($pro_extension_exists && isset( $defaults['start_page'] ) && $defaults['start_page'] == 'active_url'){
 
@@ -320,7 +320,7 @@ add_filter('query_vars', 'pwaforwp_manifest_query_vars');
 function pwaforwp_manifest_query_vars($vars) {
 
     $defaults = pwaforwp_defaultSettings();
-    $pro_extension_exists = function_exists( 'pwaforwp_is_any_extension_active' ) ? pwaforwp_is_any_extension_active() : false;
+    $pro_extension_exists = false;
     
     if ( $pro_extension_exists && isset( $defaults['start_page'] ) && $defaults['start_page'] == 'active_url' ) {
 
