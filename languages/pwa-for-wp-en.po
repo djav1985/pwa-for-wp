@@ -125,9 +125,6 @@ msgid "Settings"
 msgstr ""
 
 #: admin/settings.php:25
-msgid "Upgrade To Premium"
-msgstr ""
-
 #: admin/settings.php:55
 msgid "Dashboard"
 msgstr ""
@@ -149,9 +146,6 @@ msgid "Advance"
 msgstr ""
 
 #: admin/settings.php:65
-msgid "Premium Features"
-msgstr ""
-
 #: admin/settings.php:67
 msgid "Help"
 msgstr ""
@@ -180,19 +174,6 @@ msgstr ""
 msgid "Ask for Technical Support"
 msgstr ""
 
-#: admin/settings.php:150
-msgid "We are always available to help you with anything"
-msgstr ""
-
-#: admin/settings.php:152
-msgid "Are you existing Premium Customer?"
-msgstr ""
-
-#: admin/settings.php:155
-msgid "Yes"
-msgstr ""
-
-#: admin/settings.php:156
 msgid "No"
 msgstr ""
 
@@ -217,25 +198,10 @@ msgid "Save Settings"
 msgstr ""
 
 #: admin/settings.php:188
-msgid "Upgrade to Pro!"
-msgstr ""
-
 #: admin/settings.php:190
-msgid "Premium features"
-msgstr ""
-
 #: admin/settings.php:191
-msgid "Dedicated PWA Support"
-msgstr ""
-
 #: admin/settings.php:192
-msgid "Active Development"
-msgstr ""
-
 #: admin/settings.php:194
-msgid "UPGRADE NOW"
-msgstr ""
-
 #: admin/settings.php:215
 msgid "Installation Status"
 msgstr ""

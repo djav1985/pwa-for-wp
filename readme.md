@@ -47,7 +47,6 @@ You can give the APP-like experience to your audience which will get your websit
 * Tested with Google Lighthouse
 * More PWA Features Coming soon.
 
-* **[Premium]** the ability to expand PWA for WP with [Call to Action](https://pwa-for-wp.com/extensions/call-to-action-for-pwa/), [Loading Icon Library](https://pwa-for-wp.com/extensions/loading-icon-library-for-pwa/), [Data Analytics](https://pwa-for-wp.com/extensions/data-analytics-for-pwa/), [Pull to Refresh](https://pwa-for-wp.com/extensions/pull-to-refresh-for-pwa/), [Scroll Progress Bar](https://pwa-for-wp.com/extensions/scroll-progress-bar-for-pwa/), [PWA to APK Plugin](https://pwa-for-wp.com/extensions/pwa-to-apk-plugin/), [Offline Forms for PWA for WP](https://pwa-for-wp.com/extensions/offline-forms-for-pwa-for-wp/), [Navigation Bar for PWA](https://pwa-for-wp.com/extensions/navigation-bar-for-pwa/), [Quick Action for PWA](https://pwa-for-wp.com/extensions/quick-action-for-pwa/), [Multilingual Compatibility for PWA](https://pwa-for-wp.com/extensions/multilingual-compatibility-for-pwa/), [BuddyPress for PWA for WP](https://pwa-for-wp.com/extensions/buddypress-for-pwa-for-wp/), [Rewards on PWA Install](https://pwa-for-wp.com/extensions/rewards-on-pwa-install/), [QR Code for PWA](https://pwa-for-wp.com/extensions/qr-code-for-pwa/), [PWA to iOS Plugin](https://pwa-for-wp.com/extensions/pwa-to-ios-plugin/), and [Whitelabel for PWA ](https://pwa-for-wp.com/extensions/pwaforwp-white-label/) extensions
 
 **We Act Fast on Feedback!**
 
@@ -461,7 +460,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 
 = 1.7.14 (23 MAY 2020) =
 * Improvement   : Addons are showing require pro even after the extension manager is activated with a key. #381
-* Improvement   : redirect to the "Extension Manager" section after clicking on the "Premium Features" when user have pwa addon manager #395
 * Improvement   : flywheel directory path compatibility #399
 * Bug Fixed     : Added an option to disable the automatic add to home screen pop #398
 * Bug Fixed     : FCM push notification key generation issue fixed #372
@@ -469,7 +467,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 
 = 1.7.13 (15 MAY 2020) =
 * Improvement   : pwa-amp-sw.html is able to view in the Google analytics #389
-* Improvement   : Update the user experience of premium features tab contents on pro extension exists #378
 * Improvement   : Improved performance #354
 * Improvement   : App Icon should be load in last. #362
 
@@ -605,7 +602,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 = 1.7.1.1 (17 October 2019) =
 * Improved : Added note for Add To Home On Element Click #208
 * Improved : Added "apple-touch-startup-image" icon and cache the image previously to load fast For IOS devices #212
-* Bug Fixed: Improved upgrade to premium link #214
 * Improved : Pre-caching list automated now. On publish post precache list will be updated #215
 * Bug Fixed: Enable/Disable checkbox of the PWA on AMP or Non-AMP #216
 * Bug Fixed: Fixed the license key error while activating Loading Icon Plugins #218
@@ -647,7 +643,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 * Improved:  Add to homescreen icon showing blank in iphone(apple-touch-icon) #113
 * Bug Fixed: Landscape orientation is not working in PWA correctly #151
 * Bug Fixed: Showing "//" when adding to home screen in Firefox browser(start url) #147
-* Added: Upgrade to premium as a menu item in the PWA #174
 
 = 1.3.2 (9 September 2019) =
 * Bug Fixed: Fatal error in multisite #167
