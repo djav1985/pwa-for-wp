@@ -3836,17 +3836,17 @@ function whitelable_for_pwa_custom_config_file($data) {
 add_action("wp_ajax_pwaforwp_update_features_options", 'pwaforwp_update_features_options');
 function pwaforwp_update_features_options(){	
 	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-	if(!wp_verify_nonce($_POST['pwaforwp_security_nonce'], 'pwaforwp_ajax_check_nonce')){
-		echo wp_json_encode(array('status'=> 503, 'message'=> esc_html__( 'Unauthorized access, CSRF token not matched','pwa-for-wp')));
-		die;
-	}
-	if(!isset($_POST['fields_data']) || !is_array($_POST['fields_data'])){
-		echo wp_json_encode(array('status'=> 502, 'message'=> esc_html__( 'Feature settings not have any fields.','pwa-for-wp')));
-		die;
-	}
-	if ( ! current_user_can( 'manage_options' ) ) {
+        if(!wp_verify_nonce($_POST['pwaforwp_security_nonce'], 'pwaforwp_ajax_check_nonce')){
+                echo wp_json_encode(array('status'=> 503, 'message'=> esc_html__( 'Unauthorized access, CSRF token not matched','pwa-for-wp')));
+                wp_die();
+        }
+        if(!isset($_POST['fields_data']) || !is_array($_POST['fields_data'])){
+                echo wp_json_encode(array('status'=> 502, 'message'=> esc_html__( 'Feature settings not have any fields.','pwa-for-wp')));
+                wp_die();
+        }
+        if ( ! current_user_can( 'manage_options' ) ) {
         echo wp_json_encode(array('status'=> 501, 'message'=> esc_html__( 'Unauthorized access, permission not allowed','pwa-for-wp')));
-		die;
+                wp_die();
     }
 	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	$allFields = wp_unslash($_POST['fields_data']);	
@@ -4091,12 +4091,12 @@ function pwaforwp_update_features_options(){
 		global $pwaforwp_settings;
 		$pwaforwp_settings = array();
 		pwaforwp_required_file_creation();
-		echo wp_json_encode(array('status'=> 200, 'message'=> esc_html__('Settings Saved.','pwa-for-wp'), 'options'=>$actualFields));
-			die;
-	}else{
-		echo wp_json_encode(array('status'=> 503, 'message'=> esc_html__('Fields not defined','pwa-for-wp')));	
-		die;
-	}
+                echo wp_json_encode(array('status'=> 200, 'message'=> esc_html__('Settings Saved.','pwa-for-wp'), 'options'=>$actualFields));
+                        wp_die();
+        }else{
+                echo wp_json_encode(array('status'=> 503, 'message'=> esc_html__('Fields not defined','pwa-for-wp')));
+                wp_die();
+        }
 }
 
 add_action( 'activated_plugin', 'pwaforwp_active_update_transient' );
@@ -4391,27 +4391,27 @@ if(!function_exists('pwaforwp_subscribe_newsletter')){
 			$response = wp_remote_retrieve_body( $response );
 		}
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- using custom html
-	    echo $response;
-	    die;
-	} 	
+            echo $response;
+            wp_die();
+        }
 }
 
 if ( ! function_exists( 'pwaforwp_splashscreen_uploader' ) ) {
 	add_action( 'wp_ajax_pwaforwp_splashscreen_uploader', 'pwaforwp_splashscreen_uploader' );
 
 	function pwaforwp_splashscreen_uploader() {
-		if ( ! isset( $_GET['pwaforwp_security_nonce'] ) ){
+                if ( ! isset( $_GET['pwaforwp_security_nonce'] ) ){
             echo wp_json_encode( array( "status" => 500, "message" => esc_html__( 'Failed! Security check not active', 'pwa-for-wp' ) ) );
-            die;
+            wp_die();
         }
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         if ( ! wp_verify_nonce( $_GET['pwaforwp_security_nonce'], 'pwaforwp_ajax_check_nonce' ) ) {
-        	echo wp_json_encode( array( "status" => 500, "message" => esc_html__( "Failed! Security check", 'pwa-for-wp' ) ) );
-        	die;
+                echo wp_json_encode( array( "status" => 500, "message" => esc_html__( "Failed! Security check", 'pwa-for-wp' ) ) );
+                wp_die();
         }
         if( ! current_user_can( 'manage_options' ) ) {
-        	echo wp_json_encode( array( "status" => 401, "message" => esc_html__( "Failed! you are not autherized to save",'pwa-for-wp' ) ) );
-        	die;
+                echo wp_json_encode( array( "status" => 401, "message" => esc_html__( "Failed! you are not autherized to save",'pwa-for-wp' ) ) );
+                wp_die();
         }
 		$pwaforwp_settings = pwaforwp_defaultSettings();
 
@@ -4463,10 +4463,10 @@ if ( ! function_exists( 'pwaforwp_splashscreen_uploader' ) ) {
 
 		update_option( 'pwaforwp_settings', $pwaforwp_settings ) ;
 		wp_delete_file( $zipfilename );
-		echo wp_json_encode( array( "status" => 200, "message" => esc_html__( "Splash screen uploaded successfully", "pwa-for-wp" ) ) );
-		die;
-	} 	
-} 
+                echo wp_json_encode( array( "status" => 200, "message" => esc_html__( "Splash screen uploaded successfully", "pwa-for-wp" ) ) );
+                wp_die();
+        }
+}
 
 add_filter('pre_update_option_pwaforwp_settings', 'pwaforwp_update_force_update', 10, 3); 
 function pwaforwp_update_force_update( $value, $old_value, $option) {
