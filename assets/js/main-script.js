@@ -136,9 +136,6 @@ jQuery(document).ready(function($){
         }
         jQuery(this).siblings().removeClass("nav-tab-active");
         jQuery(this).addClass("nav-tab-active");
-        if(currentTab=="premium_features" && jQuery(this).attr('data-extmgr')=='yes'){
-            window.location.href = "admin.php?page=pwawp-extension-manager";
-        }else{
             jQuery(".form-wrap").find(".pwaforwp-"+currentTab).siblings().hide();
             jQuery(".form-wrap .pwaforwp-"+currentTab).show();       
             window.history.pushState("", "", href);
@@ -192,14 +189,13 @@ jQuery(document).ready(function($){
     //Help Query
     jQuery(".pwa-send-query").on("click", function(e){
         e.preventDefault();   
-        var message = jQuery("#pwaforwp_query_message").val();           
-        var customer = jQuery("#pwaforwp_query_customer").val();    
-        if(jQuery.trim(message) !='' && customer){       
+        var message = jQuery("#pwaforwp_query_message").val();               
+        if(jQuery.trim(message) !=''){       
                     jQuery.ajax({
                         type: "POST",    
                         url: ajaxurl,                    
                         dataType: "json",
-                        data:{action:"pwaforwp_send_query_message", customer_type: customer, message:message, pwaforwp_security_nonce:pwaforwp_obj.pwaforwp_security_nonce},
+                        data:{action:"pwaforwp_send_query_message", message:message, pwaforwp_security_nonce:pwaforwp_obj.pwaforwp_security_nonce},
                         success:function(response){                       
                           if(response['status'] =='t'){
                             jQuery(".pwa-query-success").show();
@@ -214,19 +210,9 @@ jQuery(document).ready(function($){
                         }
                         });
         }else{
-            if(jQuery.trim(message) =='' && customer ==''){
-                alert('Please enter the message and select customer type');
-            }else{
-            
-            if(customer ==''){
-                alert('Select Customer type');
+            if(jQuery.trim(message) == ""){
+                alert("Please enter the message");
             }
-            if(jQuery.trim(message) == ''){
-                alert('Please enter the message');
-            }
-                
-            }
-            
         }                   
         
     });

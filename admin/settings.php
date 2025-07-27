@@ -45,11 +45,6 @@ function pwaforpw_add_menu_links() {
                 'pwaforwp',
                 'pwaforwp_admin_interface_render');	
                                 
-	if(!pwaforwp_addons_is_active() && current_user_can('manage_options')){
-	    global $submenu;
-		$permalink = 'javasctipt:void(0);';
-		$submenu['pwaforwp'][] = array( '<div style="color:#fff176;" onclick="window.open(\'https://pwa-for-wp.com/pricing/\')">'.esc_html__( 'Upgrade To Premium', 'pwa-for-wp' ).'</div>', 'manage_options', $permalink);
-	}
 }
 add_action( 'admin_menu', 'pwaforpw_add_menu_links');
 add_action( 'admin_head', 'pwaforwp_add_menu_styles');
@@ -81,7 +76,7 @@ function pwaforwp_admin_interface_render(){
         pwaforwp_required_file_creation();                                 
 		settings_errors();
 	}
-	$tab = pwaforwp_get_tab('dashboard', array('dashboard','general', 'features','push_notification', 'other_setting', 'precaching_setting', 'tools', 'premium_features','help'));
+        $tab = pwaforwp_get_tab('dashboard', array('dashboard','general', 'features','push_notification', 'other_setting', 'precaching_setting', 'tools', 'help'));
                                                                         
 	?>
 	<div class="wrap pwaforwp-wrap">			
@@ -283,7 +278,6 @@ function pwaforwp_admin_interface_render(){
                         $license_alert = isset($days) && $days<=30 && $days!=='Lifetime' ? "<span class='pwaforwp_addon_icon dashicons dashicons-warningpwaforwp_pro_alert' ></span>": ''  ;
                 }
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- all data already escapped.
-		        echo '<a href="' . esc_url(pwaforwp_admin_link('premium_features')) . '" class="nav-tab ' . esc_attr( $tab == 'premium_features' ? 'nav-tab-active' : '') . '" data-extmgr="'. ( class_exists('PWAFORWPPROExtensionManager')? "yes": "no" ).'"> '.$license_alert.'<span class="dashicons dashicons-admin-plugins"></span> ' . esc_html__('Premium Features','pwa-for-wp') . '</a>';
 
 				echo '<a href="' . esc_url(pwaforwp_admin_link('help')) . '" class="nav-tab ' . esc_attr( $tab == 'help' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-editor-help"></span> ' . esc_html__('Help','pwa-for-wp') . '</a>';
 					?>
@@ -351,12 +345,6 @@ function pwaforwp_admin_interface_render(){
 
 
 
-						echo "</div>";
-			                        
-			                        echo "<div class='pwaforwp-premium_features' ".( $tab != 'premium_features' ? 'style="display:none;"' : '').">";
-							// other_setting Application Settings
-							do_settings_sections( 'pwaforwp_premium_features_section' );	// Page slug
-						echo "</div>";
 			                        
 						echo "<div class='pwaforwp-other_setting' ".( $tab != 'other_setting' ? 'style="display:none;"' : '').">";
 							// other_setting Application Settings
@@ -370,13 +358,6 @@ function pwaforwp_admin_interface_render(){
 			        	                   	<h3><?php echo esc_html__('Ask for Technical Support', 'pwa-for-wp') ?></h3>
 			        	                   	<p><?php echo esc_html__('We are always available to help you with anything', 'pwa-for-wp') ?></p>
 						            <ul>
-						                <li><label for="pwaforwp_query_customer"><?php echo esc_html__('Are you existing Premium Customer?', 'pwa-for-wp'); ?></label>
-						                    <select class="regular-select" rows="5" cols="60" id="pwaforwp_query_customer" name="pwaforwp_query_customer">
-						                    	<option value=""><?php echo esc_html__('Select', 'pwa-for-wp'); ?></option>
-						                    	<option value="Yes"><?php echo esc_html__('Yes', 'pwa-for-wp'); ?></option>
-						                    	<option value="No"><?php echo esc_html__('No', 'pwa-for-wp'); ?></option>
-						                    </select>
-						                </li> 
 						                <li><label for="pwaforwp_query_message"><?php echo esc_html__('Message', 'pwa-for-wp'); ?></label>
 						                    <textarea rows="5" cols="60" id="pwaforwp_query_message" name="pwaforwp_query_message" class="regular-textarea"></textarea>
 						                    <br>
@@ -404,26 +385,6 @@ function pwaforwp_admin_interface_render(){
 				</form>
 
 			</div>
-			<div class="pwaforwp-settings-second-div">
-		        <?php
-				if(!pwaforwp_addons_is_active()) { ?>
-		         <div class="pwaforwp-upgrade-pro">
-		        	<h2><?php echo esc_html__('Upgrade to Pro!','pwa-for-wp') ?></h2>
-		        	<ul>
-		        		<li><?php echo esc_html__('Premium features','pwa-for-wp') ?></li>
-		        		<li><?php echo esc_html__('Dedicated PWA Support','pwa-for-wp') ?></li>
-		        		<li><?php echo esc_html__('Active Development','pwa-for-wp') ?></li>
-		        	</ul>
-		        	<a target="_blank" href="https://pwa-for-wp.com/pricing/"><?php echo esc_html__('UPGRADE NOW','pwa-for-wp') ?></a>
-		
- 				</div>
-		         <?php  } ?>
-                 <?php            
-           
-}
-
-
-/*
 	WP Settings API
 */
 add_action('admin_init', 'pwaforwp_settings_init');
@@ -908,14 +869,6 @@ function pwaforwp_settings_init(){
 			'pwaforwp_push_notification_section'						// Settings Section ID
 		);
                 
-                add_settings_section('pwaforwp_premium_features_section', '', '__return_false', 'pwaforwp_premium_features_section');
-		// Splash Screen Background Color
-		add_settings_field(
-			'pwaforwp_premium_features',							// ID
-			'',	
-			'pwaforwp_premium_features_callback',							// CB
-			'pwaforwp_premium_features_section',						// Page slug
-			'pwaforwp_premium_features_section'						// Settings Section ID
 		);
                 
                 
@@ -1205,68 +1158,6 @@ function pwaforwp_list_addons(){
      );
 	return $add_on_list;
 }
-function pwaforwp_addons_is_active(){
-	$add_on_list = pwaforwp_list_addons();
-	$add_on_list['pwa_pro'] = array('p-slug' => 'pwa-pro-extension-manager/pwa-pro-extension-manager.php');
-	$ext_is_there = false;
-	foreach($add_on_list as $key => $on){
-         if(is_plugin_active($on['p-slug'])){
-           $ext_is_there = true;
-           break;
-         }
-     }
-	return $ext_is_there;
-}
-
-function pwaforwp_premium_features_callback(){
-    
-    $add_on_list = pwaforwp_list_addons();
-    
-    $ext_is_there = pwaforwp_addons_is_active();
-          
-     if($ext_is_there){
-         
-         $tabs      = '';
-         $container = '';
-         $tabs = apply_filters("pwaforwp_premium_features_tabs", $tabs);
-         $container = apply_filters("pwaforwp_premium_features_tabs", $container);
-         
-        ?> 
-        <div class="pwaforwp-subheading-wrap">
-
-	       <div id="pwaforwp-ext-container-for-all" class="pwaforwp-subheading">
-	            <?php
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- all required data already escapped.
-				echo $container; ?>       
-	           <div class="pwaforwp-ext-container selected" id="pwaforwp-addon">
-	           	<div class="pwaforwp-ext-wrap">
-	    <ul class="pwaforwp-features-blocks">
-	                <?php 
-					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- all required data already escapped.
-					echo pwaforwp_addon_html(); ?>
-	            </ul>
-	           </div>
-	           </div>
-	           
-	       </div>
-	   </div>
-                                
-        <?php 
-         
-     }else{
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- all required data already escapped.
-         echo ' <div class="pwaforwp-ext-wrap" style="width:100%">
-        <ul class="pwaforwp-features-blocks">'.
-			  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- all required data already escapped
-			pwaforwp_addon_html().'
-            </ul>
-            </div>';
-         
-     }
-             
-}
-
-function pwaforwp_caching_strategies_setting_callback(){
 	// Get Settings
 	$settings = pwaforwp_defaultSettings(); 
 	$arrayOPT = array(
@@ -3159,10 +3050,7 @@ function pwaforwp_send_query_message(){
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
         $message    = sanitize_textarea_field($_POST['message']);
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotValidated    
-        $customer_type    = sanitize_text_field($_POST['customer_type']);        
-        $customer_type = empty($customer_type)? $customer_type : 'No';
         $message .= "<table>
-        				<tr><td>".esc_html__('Are you existing Premium Customer?','pwa-for-wp')."</td><td>".$customer_type."</td></tr>
         				<tr><td>Plugin</td><td>".esc_html__('PWA for wp','pwa-for-wp')." </td></tr>
         				<tr><td>Version</td><td>".PWAFORWP_PLUGIN_VERSION."</td></tr>
         			</table>";
