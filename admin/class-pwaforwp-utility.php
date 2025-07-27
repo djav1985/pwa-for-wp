@@ -66,15 +66,15 @@ class PWAFORWP_Utility{
 	public function enable_modules_active_dashboard(){
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if(!wp_verify_nonce( sanitize_text_field( $_REQUEST['verify_nonce'] ), 'wp_pro_activate' ) ) {
-	        echo wp_json_encode(array("status"=>300,"message"=>esc_html__('Request not valid','pwa-for-wp'))); die;
-	        exit();
-	    }
-	    if(!current_user_can('activate_plugins')){ 
+                echo wp_json_encode(array("status"=>300,"message"=>esc_html__('Request not valid','pwa-for-wp')));
+                wp_die();
+            }
+            if(!current_user_can('activate_plugins')){
 
-			echo wp_json_encode( array("status"=>400,"message"=>esc_html__('User not authorized to access', 'pwa-for-wp') ) ); 
-			die; 
+                        echo wp_json_encode( array("status"=>400,"message"=>esc_html__('User not authorized to access', 'pwa-for-wp') ) );
+                        wp_die();
 
-		}
+                }
 		
 	    $addonLists = pwaforwp_list_addons();
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
@@ -85,11 +85,13 @@ class PWAFORWP_Utility{
 	    }else{ 
 	    	$response = new WP_Error( 'broke', esc_html__( "invalid slug provided", "pwa-for-wp" ) );
 	    }
-	    if($response instanceof  WP_Error){
-	    	echo wp_json_encode(array("status"=>500, 'message'=>$response->get_error_message()));die;
-	    }else{
-	    	echo wp_json_encode(array("status"=>200, 'message'=>esc_html__('Plugin Activating. please wait..', 'pwa-for-wp') ));die;
-	    }
+            if($response instanceof  WP_Error){
+                echo wp_json_encode(array("status"=>500, 'message'=>$response->get_error_message()));
+                wp_die();
+            }else{
+                echo wp_json_encode(array("status"=>200, 'message'=>esc_html__('Plugin Activating. please wait..', 'pwa-for-wp') ));
+                wp_die();
+            }
 	}
 }
 
