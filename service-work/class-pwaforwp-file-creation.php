@@ -444,12 +444,7 @@ class PWAforwp_File_Creation {
     }else{
       $offline_page 		= user_trailingslashit( $settings['offline_page_other'] ?  pwaforwp_https( $settings['offline_page_other'] ) :  pwaforwp_home_url());
     }
-    $pro_extension_exists = false;
-    if($settings['404_page']!='other'){
-      $page404 		= user_trailingslashit(get_permalink( $settings['404_page'] ) ?  pwaforwp_https(get_permalink( $settings['404_page'] ))  :  pwaforwp_home_url());
-    }else {
-    $pro_extension_exists = false;
-    }
+    $page404 = pwaforwp_get_404_page_url();
 
 		$cacheTimerHtml = 3600; $cacheTimerCss = 86400;
 		if(isset($settings['cached_timer']) && is_numeric($settings['cached_timer']['html'])){
