@@ -894,68 +894,7 @@ function PWAforwpreadCookie(name) {
     });
     jQuery("#ios-splash-color").wpColorPicker();
 
-    //Activate pro plugin
-    jQuery(".pwa_activate_pro_plugin").click(function(){
-        var selfp = jQuery(this);
-        if(selfp.prop("checked")==true){
-            var nonce = selfp.attr('data-secure'); var data_file = selfp.attr('data-file');
-            jQuery.ajax({
-                url: ajaxurl,type: 'post',data: 'action=pwafowp_enable_modules_active&target_file=' + data_file + '&verify_nonce=' + nonce,
-                dataType: 'json',
-                success: function (response) {
-                    if (response.status == 200) {
-                        pwaforwp_show_message_toast("success", response.message);
-                        location.reload();
-                    }else{
-                        pwaforwp_show_message_toast("error", response.message);
-                        selfp.prop("checked", false);
-                    }
-                }
-            });
-        }
-    });
 
-    jQuery(".pwaforwp_select_with_other").on("change", function(e){
-        var selfp = jQuery(this);
-        if (selfp.val()=='active_url') {
-            selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").addClass('pwaforwp_dinline');
-            selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").removeClass('pwaforwp_dnone');
-        }
-        if(selfp.val()=='other'){
-            selfp.parent("label").find(".pwaforwp-sub-tab-headings").addClass('pwaforwp_dinline');
-            selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").addClass('pwaforwp_dinline');
-            selfp.parent("label").find(".pwaforwp-sub-tab-headings").removeClass('pwaforwp_dnone');
-            selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").removeClass('pwaforwp_dnone');
-        }else{
-            selfp.parent("label").find(".pwaforwp-sub-tab-headings").removeClass('pwaforwp_dinline');
-            selfp.parent("label").find(".pwaforwp-sub-tab-headings").addClass('pwaforwp_dnone');
-            if (selfp.val()!='active_url') {
-                selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").removeClass('pwaforwp_dinline');
-                selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").addClass('pwaforwp_dnone');
-            }
-        }
-    });
-
-    jQuery(".pwaforwp_select_with_other").each(function(e){
-        var selfp = jQuery(this);
-        if (selfp.val()=='active_url') {
-            selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").addClass('pwaforwp_dinline');
-            selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").removeClass('pwaforwp_dnone');
-        }
-        if(selfp.val()=='other'){
-            selfp.parent("label").find(".pwaforwp-sub-tab-headings").addClass('pwaforwp_dinline');
-            selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").addClass('pwaforwp_dinline');
-            selfp.parent("label").find(".pwaforwp-sub-tab-headings").removeClass('pwaforwp_dnone');
-            selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").removeClass('pwaforwp_dnone');
-        }else{
-            selfp.parent("label").find(".pwaforwp-sub-tab-headings").removeClass('pwaforwp_dinline');
-            selfp.parent("label").find(".pwaforwp-sub-tab-headings").addClass('pwaforwp_dnone');
-            if (selfp.val()!='active_url') {
-                selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").removeClass('pwaforwp_dinline');
-                selfp.parent("label").find(".pwaforwp-upgrade-pro-inline").addClass('pwaforwp_dnone');
-            }
-        }
-    });
 
 
     
