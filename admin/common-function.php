@@ -723,11 +723,17 @@ function pwaforwp_manifest_json_url($is_amp=false){
   if($fileCheck && !$multisite_postfix){
     $restApiEnabled = 400;
   }else{
-    $restApiEnabled = get_transient( 'pwaforwp_restapi_check' ); 
-    if ( $restApiEnabled===false || empty($restApiEnabled) ) {
+    $restApiEnabled = get_transient( 'pwaforwp_restapi_check' );
+    if ( $restApiEnabled === false || empty( $restApiEnabled ) ) {
         $response = wp_remote_get( rest_url( 'pwa-for-wp/v2/pwa-manifest-json' ) );
-        $restApiEnabled = wp_remote_retrieve_response_code($response);
-        set_transient( "pwaforwp_restapi_check", $restApiEnabled );
+        if ( is_wp_error( $response ) ) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+            error_log( $response->get_error_message() );
+            $restApiEnabled = 400;
+        } else {
+            $restApiEnabled = wp_remote_retrieve_response_code( $response );
+        }
+        set_transient( 'pwaforwp_restapi_check', $restApiEnabled );
     }
   }
 
