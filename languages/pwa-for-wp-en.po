@@ -876,7 +876,6 @@ msgid "Activate"
 msgstr ""
 
 #: admin/settings.php:2084
-msgid "Enter addon license key to activate updates & support."
 msgstr ""
 
 #: admin/settings.php:2148 admin/settings.php:2180
@@ -885,27 +884,21 @@ msgstr ""
 
 #: admin/settings.php:2159
 #, php-format
-msgid "Your license key expired on %s."
 msgstr ""
 
 #: admin/settings.php:2164
-msgid "Your license key has been disabled."
 msgstr ""
 
 #: admin/settings.php:2167
-msgid "Invalid license."
 msgstr ""
 
 #: admin/settings.php:2171
-msgid "Your license is not active for this URL."
 msgstr ""
 
 #: admin/settings.php:2174
-msgid "This appears to be an invalid license key."
 msgstr ""
 
 #: admin/settings.php:2177
-msgid "Your license key has reached its activation limit."
 msgstr ""
 
 #: admin/settings.php:2227

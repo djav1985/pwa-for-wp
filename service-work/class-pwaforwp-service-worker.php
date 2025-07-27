@@ -544,7 +544,7 @@ class PWAFORWP_Service_Worker {
             if(isset($settings['prefetch_manifest_setting']) && $settings['prefetch_manifest_setting']==1){
                 echo '<link rel="prefetch" href="'. esc_url( pwaforwp_manifest_json_url() ).'">'.PHP_EOL;
             }
-            $pro_extension_exists = function_exists('pwaforwp_is_any_extension_active')?pwaforwp_is_any_extension_active():false;
+            $pro_extension_exists = false;
 
             
             $manifest_url = pwaforwp_add_manifest_variables(pwaforwp_manifest_json_url());

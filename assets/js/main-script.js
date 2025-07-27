@@ -456,7 +456,6 @@ jQuery(document).ready(function($){
                             });
                         }
                             else{
-                alert('Please enter value license key');
                 current.removeClass('updating-message'); 
             }
 
@@ -518,7 +517,6 @@ jQuery(document).ready(function($){
                             })
                             
             }else{
-                alert('Please enter value license key');
                 current.removeClass('updating-message'); 
             }
 
@@ -655,7 +653,6 @@ function PWAforwpreadCookie(name) {
             })
                             
             }else{
-                alert('Please enter value license key');
                 current.removeClass('updating-message'); 
             }
 
@@ -725,7 +722,6 @@ function PWAforwpreadCookie(name) {
             })
                             
             }else{
-                alert('Please enter value license key');
                 current.removeClass('updating-message'); 
             }
         }
@@ -842,56 +838,6 @@ function PWAforwpreadCookie(name) {
         jQuery('.notification-wrap-tb').find('.footer button').trigger('click')
     });
 
-    jQuery('.pwaforwp-install-require-plugin').on("click", function(e){
-        e.preventDefault();
-        /*var result = confirm("This required a free plugin to install in your WordPress");
-        if (!result) {
-
-        }*/
-        var self = jQuery(this);
-        self.html('Installing..').addClass('updating-message');
-        var nonce = self.attr('data-secure');
-        var activate_url = self.attr('data-activate-url');
-        var currentId = self.attr('id');
-        var activate = '';
-         if (currentId == 'pushnotification') {
-                activate = '&activate=pushnotification';
-            }
-
-        console.log(wp.updates);
-
-
-        jQuery.ajax({
-            url: ajaxurl,
-            type: 'post',
-            data: 'action=pwafowp_enable_modules_upgread' + activate + '&verify_nonce=' + nonce,
-            dataType: 'json',
-            success: function (response) {
-                if (response.status == 200) {
-                    if (self.hasClass('not-exist')) {
-
-                        //To installation
-                        wp.updates.installPlugin(
-                            {
-                                slug: response.slug,
-                                success: function (pluginresponse) {
-                                    console.log(pluginresponse.activateUrl);
-                                    pwaforwp_Activate_Modules_Upgrade(pluginresponse.activateUrl, self, response, nonce)
-                                }
-                            }
-                        );
-
-                    } else {
-                        var activateUrl = self.attr('data-activate-url');
-                        pwaforwp_Activate_Modules_Upgrade(activateUrl, self, response, nonce)
-                    }
-                } else {
-                    alert(response.message)
-                }
-
-            }
-        });
-    });
     jQuery("#ios-splash-color").wpColorPicker();
 
 
@@ -1110,52 +1056,6 @@ var pwaforwp_dependent_features_section = function(fieldname, fieldValue){
 
 
 
-var pwaforwp_Activate_Modules_Upgrade = function(url, self, response, nonce){
-        if (typeof url === 'undefined' || !url) {
-            return;
-        }
-         console.log( 'Activating...' );
-         self.html('Activating...');
-         jQuery.ajax(
-            {
-                async: true,
-                type: 'GET',
-                //data: dataString,
-                url: url,
-                success: function () {
-                    var msgplug = '';
-                    if(self.attr('id')=='pushnotification'){
-                        msgplug = 'push notification';
-                        console.log("push notification Activated");
-                        self.removeClass('updating-message')
-                        self.removeClass("button")
-                        self.removeClass('pwaforwp-install-require-plugin')
-                        self.unbind('click');
-                        self.html('<a target="_blank" href="'+response.redirect_url+'" style="color:#fff;text-decoration:none;">View Settings</a>');
-                    }
-                },
-                error: function (jqXHR, exception) {
-                    var msg = '';
-                    if (jqXHR.status === 0) {
-                        msg = 'Not connect.\n Verify Network.';
-                    } else if (jqXHR.status === 404) {
-                        msg = 'Requested page not found. [404]';
-                    } else if (jqXHR.status === 500) {
-                        msg = 'Internal Server Error [500].';
-                    } else if (exception === 'parsererror') {
-                        msg = 'Requested JSON parse failed.';
-                    } else if (exception === 'timeout') {
-                        msg = 'Time out error.';
-                    } else if (exception === 'abort') {
-                        msg = 'Ajax request aborted.';
-                    } else {
-                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                    }
-                    console.log(msg);
-                },
-            }
-        );
-    }
 
 var pwaforwp_showpopup = function(caption, inlineId, submitClass){
     if(caption===null){caption="";}

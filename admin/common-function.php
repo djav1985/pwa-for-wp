@@ -964,24 +964,6 @@ function pwaforwp_current_user_can(){
 
 
 
-// Function to check if any plugin from the extension is active
-function pwaforwp_is_any_extension_active() {
-    $addons_list = array('call-to-action-for-pwa/call-to-action-for-pwa.php', 'buddypress-for-pwaforwp/buddypress-for-pwaforwp.php', 'data-analytics-for-pwa/data-analytics-for-pwa.php', 'loading-icon-library-for-pwa/loading-icon-library-for-pwa.php', 'multilingual-compatibility-for-pwa/multilingual-compatibility-for-pwa.php', 'navigation-bar-for-pwa/navigation-bar-for-pwa.php', 'offline-forms-for-pwa-for-wp/offline-forms-for-pwa-for-wp.php', 'pull-to-refresh-for-pwa/pull-to-refresh-for-pwa.php', 'pwa-to-apk-plugin/pwa-to-apk-plugin.php', 'qr-code-for-pwa/qr-code-for-pwa.php','quick-action-for-pwa/quick-action-for-pwa.php','scroll-progress-bar-for-pwa/scroll-progress-bar-for-pwa.php','rewards-on-pwa-install/rewards-on-pwa-install.php');
-    $active_list = apply_filters('active_plugins', get_option('active_plugins'));
-    $addons_active_list = array_intersect($addons_list, $active_list);
-
-    if(!empty($addons_active_list)){
-        return true;
-    }
-    return false; // None of the plugins from the list are active
-}
-
-/*
-*@package PWAforWP
-*@version 1.7.67
-*@description update icon urls in manhifest when WP Hide & Security Enhancer is used
-* https://wp-hide.com/
-*/
 add_filter('pwaforwp_manifest_images_src','pwaforwp_manifest_images_src',10,1);
 function pwaforwp_manifest_images_src($src){
 	// if WP Hide & Security Enhancer is active 
@@ -1042,7 +1024,7 @@ function pwaforwp_manifest_url( $arg = 'src' ) {
 function pwaforwp_add_manifest_variables($url) {
     $settings = pwaforwp_defaultSettings();
 
-    $pro_extension_exists = function_exists('pwaforwp_is_any_extension_active')?pwaforwp_is_any_extension_active():false;
+    $pro_extension_exists = false;
 
     
 

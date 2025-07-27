@@ -87,7 +87,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 * Test   : Test with WordPress version 6.8 #956
 
 = 1.7.77 (13 March 2025) =
-* Added  : Whitelabel For PWA (pro extension) #693
 * Feature : Swipe left / right to load next and previous article #567
 * Improvement  : update setting UI #697
 * Improvement  : Readme update with new feature list #945
@@ -96,7 +95,6 @@ You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 * Bug Fixed  : PWA Installation Instructions Persist After Install & Cancel CTA Still Triggers Installation #951
 
 = 1.7.76 (31 December 2024) =
-* Added  : PWA to ios as a service (pro extension)#693
 * Improvement  : Make a feature to force load the "pwa-non-amp-install" specific parameter URL. #932
 * Bug Fixed  : Offline form feature not working in IOS. #937
 * Improvement  : Scroll Progress Bar is not showing when PWA display mode is fullscreen #943
