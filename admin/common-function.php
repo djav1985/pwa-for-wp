@@ -618,6 +618,32 @@ function pwaforwp_multisite_postfix(){
                         
 }
 
+function pwaforwp_get_404_page_url() {
+    $settings = pwaforwp_defaultSettings();
+
+    if ( isset( $settings['404_page'] ) && $settings['404_page'] && 'other' !== $settings['404_page'] ) {
+        $url = get_permalink( $settings['404_page'] );
+    } elseif ( isset( $settings['404_page'] ) && 'other' === $settings['404_page'] && ! empty( $settings['404_page_other'] ) ) {
+        $url = $settings['404_page_other'];
+    } elseif ( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() && function_exists( 'get_block_template' ) ) {
+        $template = get_block_template( '404', 'wp_template' );
+        if ( $template && isset( $template->wp_id ) ) {
+            $url = get_permalink( $template->wp_id );
+        } else {
+            $url = '';
+        }
+    } else {
+        $url = '';
+    }
+
+    if ( ! $url ) {
+        $url = pwaforwp_home_url();
+    }
+
+    return user_trailingslashit( pwaforwp_https( $url ) );
+}
+
+
 function pwaforwp_write_a_file( $path, $content, $action = null ) {
 
         global $wp_filesystem;

@@ -43,6 +43,7 @@ You can give the APP-like experience to your audience which will get your websit
 * Background color options for Splash screen
 * Add your own Application and short name.
 * Easily set the start page from options.
+* Uses block theme's 404 template when no page is selected.
 * Set Device Orientation easily.
 * Tested with Google Lighthouse
 * More PWA Features Coming soon.

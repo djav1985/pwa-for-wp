@@ -1955,7 +1955,7 @@ function pwaforwp_404_page_callback(){
 	<p class="description">
 		<?php
 		/* translators: %s: 404 page */
-		printf(	esc_html__( '404 page is displayed and the requested page is not found. Current 404 page is %s', 'pwa-for-wp' ), esc_url(	get_permalink($settings['404_page']	) ? get_permalink( $settings['404_page'] ) : '' )); ?>
+                printf( esc_html__( '404 page is displayed and the requested page is not found. Current 404 page is %s', 'pwa-for-wp' ), esc_url( get_permalink( $settings['404_page'] ) ? get_permalink( $settings['404_page'] ) : '' ) ); echo ' '; esc_html_e( 'Leaving this empty on a block theme uses the theme\'s 404 template.', 'pwa-for-wp' ); ?>
 	</p>
 
 	<?php
