@@ -192,6 +192,11 @@ function pwaforwp_frontend_enqueue(){
                     $reset_cookies=1;
                 }
 
+                $enable_pull_to_refresh = 0;
+                if( isset( $settings['enable_pull_to_refresh'] ) && $settings['enable_pull_to_refresh'] == 1 ){
+                    $enable_pull_to_refresh = 1;
+                }
+
                 $swipe_navigation = 0;
                 if( isset( $settings['swipe_navigation'] ) && $settings['swipe_navigation'] == 1 ){
                     $swipe_navigation = 1;
@@ -207,6 +212,7 @@ function pwaforwp_frontend_enqueue(){
                 'user_admin'  => is_user_logged_in(),
                 'loader_only_pwa'  => $loader_only_pwa,
                 'reset_cookies'  => $reset_cookies,
+                'enable_pull_to_refresh' => $enable_pull_to_refresh,
                 'force_rememberme'=>$force_rememberme,
                 'swipe_navigation' => $swipe_navigation,
                 'pwa_manifest_name' => apply_filters('pwaforwp_manifest_file_name', "pwa-manifest".pwaforwp_multisite_postfix().".json"),
@@ -243,7 +249,12 @@ function pwaforwp_frontend_enqueue(){
           
         wp_localize_script('pwaforwp-download-js', 'pwaforwp_download_js_obj', $object_js_download);
         wp_enqueue_script('pwaforwp-download-js');
-        
+
+        wp_register_script('pwaforwp-pull-refresh-js', PWAFORWP_PLUGIN_URL . 'assets/js/pull-to-refresh.js', array(), $force_update_sw_setting_value, true);
+        if ( $enable_pull_to_refresh == 1 ) {
+            wp_enqueue_script('pwaforwp-pull-refresh-js');
+        }
+
 }
 add_action( 'wp_enqueue_scripts', 'pwaforwp_frontend_enqueue', 35 );
 
@@ -390,6 +401,7 @@ function pwaforwp_fields_and_type($data_type = 'value'){
         'force_rememberme'=>array('type'=>'checkbox','value'=>0),
         'offline_message_setting'=>array('type'=>'checkbox','value'=>0),
         'reset_cookies'=>array('type'=>'checkbox','value'=>0),
+        'enable_pull_to_refresh'=>array('type'=>'checkbox','value'=>0),
         'avoid_loggedin_users'=>array('type'=>'checkbox','value'=>0),
         'avoid_default_banner'=>array('type'=>'checkbox','value'=>0),
         'external_links_setting'=>array('type'=>'checkbox','value'=>0),

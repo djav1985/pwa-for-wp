@@ -540,6 +540,13 @@ function pwaforwp_settings_init(){
 			'pwaforwp_other_setting_section',						// Page slug
 			'pwaforwp_other_setting_section'						// Settings Section ID
 		);
+                add_settings_field(
+                        'pwaforwp_enable_pull_to_refresh_setting',             // ID
+                        '<label for="pwaforwp_settings[enable_pull_to_refresh]"><b>'.esc_html__('Pull to Refresh', 'pwa-for-wp').'</b></label>',   // Title
+                        'pwaforwp_enable_pull_to_refresh_setting_callback',    // CB
+                        'pwaforwp_other_setting_section',                      // Page slug
+                        'pwaforwp_other_setting_section'                       // Settings Section ID
+                );
 		add_settings_field(
 			'pwaforwp_force_rememberme_setting',							// ID
 			'<label for="pwaforwp_settings[force_rememberme]"><b>'.esc_html__('Force Remember me', 'pwa-for-wp').'</b></label>',	// Title
@@ -1252,17 +1259,29 @@ function pwaforwp_offline_message_setting_callback(){
 	<?php
 }
 function pwaforwp_scrollbar_setting_callback(){
-	// Get Settings
-	$settings = pwaforwp_defaultSettings();
-	$scrollbar_checked = 'checked="checked';
-	if(!isset( $settings['scrollbar_setting'] ) || $settings['scrollbar_setting'] == 0){
-		$scrollbar_checked = '';
-	}
-	?>
-        
-	<input type="checkbox" name="pwaforwp_settings[scrollbar_setting]" id="pwaforwp_settings[scrollbar_setting]" class="" <?php echo esc_attr($scrollbar_checked); ?> data-uncheck-val="0" value="1">
-	<p><?php echo esc_html__('To hide scrollbar in pwa', 'pwa-for-wp'); ?></p>
-	<?php
+        // Get Settings
+        $settings = pwaforwp_defaultSettings();
+        $scrollbar_checked = 'checked="checked';
+        if(!isset( $settings['scrollbar_setting'] ) || $settings['scrollbar_setting'] == 0){
+                $scrollbar_checked = '';
+        }
+        ?>
+
+        <input type="checkbox" name="pwaforwp_settings[scrollbar_setting]" id="pwaforwp_settings[scrollbar_setting]" class="" <?php echo esc_attr($scrollbar_checked); ?> data-uncheck-val="0" value="1">
+        <p><?php echo esc_html__('To hide scrollbar in pwa', 'pwa-for-wp'); ?></p>
+        <?php
+}
+
+function pwaforwp_enable_pull_to_refresh_setting_callback(){
+        $settings = pwaforwp_defaultSettings();
+        $checked = '';
+        if( isset( $settings['enable_pull_to_refresh'] ) && $settings['enable_pull_to_refresh'] == 1 ){
+                $checked = 'checked';
+        }
+        ?>
+        <input type="checkbox" name="pwaforwp_settings[enable_pull_to_refresh]" id="pwaforwp_settings[enable_pull_to_refresh]" class="" <?php echo esc_attr($checked); ?> data-uncheck-val="0" value="1">
+        <p><?php echo esc_html__('Reloads the page when pulled down on touch devices.', 'pwa-for-wp'); ?></p>
+        <?php
 }
 
 function pwaforwp_force_rememberme_setting_callback(){
