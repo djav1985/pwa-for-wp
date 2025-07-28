@@ -1,2 +1,7 @@
 # Force all files to use LF line endings
 * text eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
