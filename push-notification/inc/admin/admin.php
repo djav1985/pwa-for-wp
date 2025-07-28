@@ -99,8 +99,8 @@ if ( ! is_network_admin() ) {
         return $settings;
 	}
 
-	function load_admin_scripts($hook_suffix){
-		if( $hook_suffix=='toplevel_page_push-notification' || $hook_suffix == 'toplevel_page_push-notification-global-setting' ) {
+        function load_admin_scripts($hook_suffix){
+                if( $hook_suffix === 'toplevel_page_pwaforwp' && isset( $_GET['tab'] ) && $_GET['tab'] === 'push_notification' ) {
 
 			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '';	
 
@@ -136,30 +136,9 @@ if ( ! is_network_admin() ) {
 		}
 	}
 
-	public function add_menu_links(){
-		// Main menu page
-		add_menu_page( esc_html__( 'Push Notification', 'push-notification' ), 
-	                esc_html__( 'Push Notifications', 'push-notification' ), 
-	                'manage_options',
-	                'push-notification',
-	                array($this, 'admin_interface_render'),
-	                '', 100 );
-		
-		// Settings page - Same as main menu page
-		add_submenu_page( 'push-notification',
-	                esc_html__( 'Push Notifications Options', 'push-notification' ),
-	                esc_html__( 'Settings', 'push-notification' ),
-	                'manage_options',
-	                'push-notification',
-	                array($this, 'admin_interface_render')
-	            );
-
-			if(PN_Server_Request::getProStatus() != 'active'){
-				global $submenu;
-				$permalink = 'javasctipt:void(0);';
-				$submenu['push-notification'][] = array( '<div style="color:#fff176;" onclick="window.open(\'https://pushnotifications.io/pricing\')">'.esc_html__( 'Upgrade To Premium', 'push-notification' ).'</div>', 'manage_options', $permalink);
-			}
-	}
+       public function add_menu_links(){
+               // Legacy menu removed
+       }
 	function admin_interface_render(){
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
@@ -732,7 +711,12 @@ if ( ! is_network_admin() ) {
         if (!isset($settings['include_targeting_type']) && !isset($settings['include_targeting_data'])) {
             $settings['include_targeting_type'][] ='globally';
             $settings['include_targeting_data'][] ='Globally';
-            update_option( 'push_notification_settings', $settings );
+            $all_settings = get_option( 'pwaforwp_settings', array() );
+            if ( ! isset( $all_settings['push_notification'] ) ) {
+                    $all_settings['push_notification'] = array();
+            }
+            $all_settings['push_notification']['settings'] = $settings;
+            update_option( 'pwaforwp_settings', $all_settings );
         }
 
         $arrayOPT = array(
@@ -1654,11 +1638,11 @@ Keep empty or 0 to disable the limit',"push-notification")."</p>";
 				$user_token = $auth_settings['user_token'];
 				$server_response = PN_Server_Request::inactivateWebsite($user_token);
 				if ($server_response['status']) {
-					if ( is_multisite() ) {
-						delete_site_option('push_notification_auth_settings');
-					}else{
-						delete_option('push_notification_auth_settings');
-					}
+                                        $all_settings = get_option( 'pwaforwp_settings', array() );
+                                        if ( isset( $all_settings['push_notification']['auth_settings'] ) ) {
+                                                unset( $all_settings['push_notification']['auth_settings'] );
+                                                update_option( 'pwaforwp_settings', $all_settings );
+                                        }
 					
 					$request_response['status'] = 200;
 					$request_response['server_response'] = $server_response;
@@ -2418,7 +2402,11 @@ if ( is_admin() || wp_doing_ajax() ) {
 // Put it here because in Gutenberg is_admin gives us false
 add_action( 'transition_post_status', array( $push_Notification_Admin_Obj, 'send_notification_on_update' ), 10, 3 );
 function push_notification_settings(){
-	$push_notification_settings = get_option( 'push_notification_settings', array() );
+        $pwaforwp_settings = get_option( 'pwaforwp_settings', array() );
+        $push_notification_settings = array();
+        if ( isset( $pwaforwp_settings['push_notification']['settings'] ) ) {
+                $push_notification_settings = $pwaforwp_settings['push_notification']['settings'];
+        }
 	$icon = PUSH_NOTIFICATION_PLUGIN_URL.'assets/image/bell-icon.png';
 	if(function_exists('pwaforwp_defaultSettings')){
 		$pwaforwpSettings = pwaforwp_defaultSettings();
@@ -2455,16 +2443,18 @@ function push_notification_settings(){
 	return $push_notification_settings;
 }
 function push_notification_auth_settings(){
-	if ( is_multisite() ) {
-		$push_notification_auth_settings = get_site_option( 'push_notification_auth_settings', array() );
-	}else{
-		$push_notification_auth_settings = get_option( 'push_notification_auth_settings', array() );
-	} 
-	return $push_notification_auth_settings;
+        $pwaforwp_settings = get_option( 'pwaforwp_settings', array() );
+        if ( isset( $pwaforwp_settings['push_notification']['auth_settings'] ) ) {
+                return $pwaforwp_settings['push_notification']['auth_settings'];
+        }
+        return array();
 }
 function push_notification_details_settings(){
-	$push_notification_details_settings = get_option( 'push_notification_details_settings', array() ); 
-	return $push_notification_details_settings;
+        $pwaforwp_settings = get_option( 'pwaforwp_settings', array() );
+        if ( isset( $pwaforwp_settings['push_notification']['details_settings'] ) ) {
+                return $pwaforwp_settings['push_notification']['details_settings'];
+        }
+        return array();
 }
 
 /** 

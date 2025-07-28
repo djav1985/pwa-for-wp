@@ -28,85 +28,6 @@ msgstr ""
 msgid "Please update to PWA v0.2. Expected argument to be %s."
 msgstr ""
 
-#: admin/class-pwaforwp-plugin-usage-tracker.php:259
-msgid ""
-"We can't detect any product information. This is most probably because you "
-"have not included the code snippet."
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:688
-#, php-format
-msgid ""
-"Become a super contributor by opting in to our anonymous %1$s data "
-"collection and to our updates. We guarantee no sensitive data is collected."
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:695
-#, php-format
-msgid ""
-"Thank you for installing our %1$s. We'd like your permission to track its "
-"usage on your site and subscribe you to our newsletter. We won't record any "
-"sensitive data, only information regarding the WordPress environment and "
-"%1$s settings, which we will use to help us make improvements to the %1$s. "
-"Tracking is completely optional."
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:704
-msgid "Learn more."
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:743
-#, php-format
-msgid ""
-"Thank you for opting in to tracking. Would you like to receive occasional "
-"news about this %s, including details of new features and special offers?"
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:784
-msgid "Sorry to see you go"
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:785
-msgid ""
-"Before you deactivate the plugin, would you quickly give us your reason for "
-"doing so?"
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:787
-msgid "Set up is too difficult"
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:788
-msgid "Lack of documentation"
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:789
-msgid "Not the features I wanted"
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:790
-msgid "Found a better plugin"
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:791
-msgid "Installed by mistake"
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:792
-msgid "Only required temporarily"
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:793
-msgid "Didn't work"
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:795
-msgid "Details (optional)"
-msgstr ""
-
-#: admin/class-pwaforwp-plugin-usage-tracker.php:835
-msgid "Submitting form"
-msgstr ""
 
 #: admin/newsletter.php:35 pwa-for-wp.php:193
 msgid "No Thanks"
@@ -873,32 +794,7 @@ msgstr ""
 
 #: admin/settings.php:2075
 msgid "Activate"
-msgstr ""
 
-#: admin/settings.php:2084
-msgstr ""
-
-#: admin/settings.php:2148 admin/settings.php:2180
-msgid "An error occurred, please try again."
-msgstr ""
-
-#: admin/settings.php:2159
-#, php-format
-msgstr ""
-
-#: admin/settings.php:2164
-msgstr ""
-
-#: admin/settings.php:2167
-msgstr ""
-
-#: admin/settings.php:2171
-msgstr ""
-
-#: admin/settings.php:2174
-msgstr ""
-
-#: admin/settings.php:2177
 msgstr ""
 
 #: admin/settings.php:2227

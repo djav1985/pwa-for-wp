@@ -2905,6 +2905,7 @@ function pwaforwp_features_settings()
                 $featureVal['enable_field'],
                 isset($featureVal['tooltip_option'])? esc_html($featureVal['tooltip_option']): '',
                 (isset($settings[$featureVal['enable_field']]) && $settings[$featureVal['enable_field']]? esc_attr('pwaforwp-feature-enabled') : ''),
+                $settingsHtml,
                 $warnings
             );
         }
