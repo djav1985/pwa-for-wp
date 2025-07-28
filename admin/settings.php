@@ -3465,53 +3465,6 @@ function pwaforwp_resize_images( $old_value, $new_value, $option='' )
 }
 
 
-if(!function_exists('pwaforwp_subscribe_newsletter')) {
-    add_action('wp_ajax_pwaforwp_subscribe_newsletter', 'pwaforwp_subscribe_newsletter');
-
-    function pwaforwp_subscribe_newsletter()
-    {
-        if (! isset($_POST['pwaforwp_security_nonce']) ) {
-            return; 
-        }
-     // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-        if (!wp_verify_nonce($_POST['pwaforwp_security_nonce'], 'pwaforwp_ajax_check_nonce') ) {
-            return;
-        }
-        if (! current_user_can('manage_options') ) {
-            return;
-        }
-        $api_url = 'http://magazine3.company/wp-json/api/central/email/subscribe';
-        $api_params = array(
-      // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-            'name' => sanitize_text_field($_POST['name']),
-      // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-            'email'=> sanitize_email($_POST['email']),
-      // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-            'website'=> sanitize_text_field($_POST['website']),
-            'type'=> 'pwa'
-        );
-        $response = wp_remote_post($api_url, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ));
-        if (is_wp_error($response) || 200 !== wp_remote_retrieve_response_code($response) ) {
-            if(!empty($response->get_error_message())) {
-                $error_message = strtolower($response->get_error_message());
-                $error_pos = strpos($error_message, 'operation timed out');
-                if($error_pos !== false) {
-                    $message = esc_html__('Request timed out, please try again', 'pwa-for-wp');
-                }else{
-                    $message = esc_html($response->get_error_message());
-                }
-            }
-            if(empty($message)) { 
-                $message =   esc_html__('An error occurred, please try again.', 'pwa-for-wp');
-            }
-        }else{
-            $response = wp_remote_retrieve_body($response);
-        }
-     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- using custom html
-            echo $response;
-            wp_die();
-    }
-}
 
 if (! function_exists('pwaforwp_splashscreen_uploader') ) {
     add_action('wp_ajax_pwaforwp_splashscreen_uploader', 'pwaforwp_splashscreen_uploader');
