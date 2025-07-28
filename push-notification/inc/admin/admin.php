@@ -11,8 +11,8 @@ class Push_Notification_Admin{
 
 	public function init(){
 		add_action('admin_notices', array($this, 'admin_notices_opt') );
-		if (! is_network_admin()) {
-			add_action( 'admin_menu', array( $this, 'add_menu_links') );
+if ( ! is_network_admin() ) {
+			// Menu integration handled in main plugin.
 		}
 		add_action( 'admin_init', array( $this, 'settings_init') );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_scripts' ) );

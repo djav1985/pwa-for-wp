@@ -1,3 +1,5 @@
+= 1.7.82 (Unreleased)
+* Merge push notifications companion plugin into core.
 = 1.7.81 (01 Aug 2025)
 * Feature : Added Pull to Refresh option allowing users to reload the page by swiping down.
 
