@@ -139,8 +139,7 @@ jQuery(document).ready(function($){
             jQuery(".form-wrap").find(".pwaforwp-"+currentTab).siblings().hide();
             jQuery(".form-wrap .pwaforwp-"+currentTab).show();       
             window.history.pushState("", "", href);
-            if(currentTab=='help' || currentTab=='features'){
-                jQuery('.pwaforwp-help').find("tr th:first").hide()
+            if(currentTab=='features'){
                 jQuery('.pwaforwp-settings-form').find('p.submit').hide();
             }else{
                  jQuery('.pwaforwp-settings-form').find('p.submit').show();
@@ -150,8 +149,7 @@ jQuery(document).ready(function($){
     });
     var url      = window.location.href;     // Returns full URL
     var currentTab = pwaforwpGetParamByName("tab",url);
-    if(currentTab=='help' || currentTab=='features'){
-        jQuery('.pwaforwp-help').find("tr th:first").hide()
+    if(currentTab=='features'){
         jQuery('.pwaforwp-settings-form').find('p.submit').hide();
     }
         
@@ -186,32 +184,6 @@ jQuery(document).ready(function($){
         return false;
     });
         
-    //Help Query
-    jQuery(".pwa-send-query").on("click", function(e){
-        e.preventDefault();   
-        var message = jQuery("#pwaforwp_query_message").val();               
-        if(jQuery.trim(message) !=''){       
-                    jQuery.ajax({
-                        type: "POST",    
-                        url: ajaxurl,                    
-                        dataType: "json",
-                        data:{action:"pwaforwp_send_query_message", message:message, pwaforwp_security_nonce:pwaforwp_obj.pwaforwp_security_nonce},
-                        success:function(response){                       
-                          if(response['status'] =='t'){
-                            jQuery(".pwa-query-success").show();
-                            jQuery(".pwa-query-error").hide();
-                          }else{
-                            jQuery(".pwa-query-success").hide();  
-                            jQuery(".pwa-query-error").show();
-                          }
-                        },
-                        error: function(response){                    
-                        console.log(response);
-                        }
-                        });
-        }else{
-            if(jQuery.trim(message) == ""){
-                alert("Please enter the message");
             }
         }                   
         

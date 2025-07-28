@@ -86,7 +86,6 @@ function pwaforwp_admin_interface_render()
 
                                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- all data already escapped.
 
-                    echo '<a href="' . esc_url(pwaforwp_admin_link('help')) . '" class="nav-tab ' . esc_attr($tab == 'help' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-editor-help"></span> ' . esc_html__('Help', 'pwa-for-wp') . '</a>';
                     ?>
                                 </h2>
                                 <?php
@@ -166,27 +165,6 @@ function pwaforwp_admin_interface_render()
                         do_settings_sections('pwaforwp_other_setting_section');    // Page slug
                         echo "</div>";
                                    
-                        echo "<div class='pwaforwp-help' ".( $tab != 'help' ? 'style="display:none;"' : '').">";
-                        echo "<h3>".esc_html__('Documentation', 'pwa-for-wp')."</h3><a target=\"_blank\" class='button' href=\"https://ampforwp.com/tutorials/article/pwa-for-amp/\">".esc_html__('View Setup Documentation', 'pwa-for-wp')."</a>";
-                        ?>    
-                                           <div class="pwa_contact_us_div">
-                                               <h3><?php echo esc_html__('Ask for Technical Support', 'pwa-for-wp') ?></h3>
-                                               <p><?php echo esc_html__('We are always available to help you with anything', 'pwa-for-wp') ?></p>
-                                    <ul>
-                                        <li><label for="pwaforwp_query_message"><?php echo esc_html__('Message', 'pwa-for-wp'); ?></label>
-                                            <textarea rows="5" cols="60" id="pwaforwp_query_message" name="pwaforwp_query_message" class="regular-textarea"></textarea>
-                                            <br>
-                                            <p class="pwa-query-success pwa_hide"><?php echo esc_html__('Message sent successfully, Please wait we will get back to you shortly', 'pwa-for-wp'); ?></p>
-                                            <p class="pwa-query-error pwa_hide"><?php echo esc_html__('Message not sent. please check your network connection', 'pwa-for-wp'); ?></p>
-                                        </li> 
-                                        <li><button class="button pwa-send-query"><?php echo esc_html__('Send Message', 'pwa-for-wp'); ?></button></li>
-                                    </ul>            
-                                           
-                                </div>
-                            <?php
-                            // design Application Settings
-                            do_settings_sections('amp_pwa_help_section');    // Page slug
-                            echo "</div>";
 
                             ?>
                     </div>
@@ -1471,7 +1449,7 @@ function pwaforwp_background_color_callback()
     
     <!-- Background Color -->
         <input type="text" name="pwaforwp_settings[background_color]" id="pwaforwp_settings[background_color]" class="pwaforwp-colorpicker" data-alpha-enabled="true" value="<?php echo isset($settings['background_color']) ? esc_attr($settings['background_color']) : '#D5E0EB'; ?>" data-default-color="#D5E0EB">
-        <p class="description"><?php echo esc_html__('This color fills the splash screen while your PWA is loading.', 'pwa-for-wp'); ?></p>
+        <p class="description"><?php echo esc_html__('Select the splash screen background color.', 'pwa-for-wp'); ?></p>
     <?php
 }
 function pwaforwp_theme_color_callback()
@@ -1481,7 +1459,7 @@ function pwaforwp_theme_color_callback()
     
     <!-- Background Color -->
     <input type="text" name="pwaforwp_settings[theme_color]" id="pwaforwp_settings[theme_color]" class="pwaforwp-colorpicker" data-alpha-enabled="true" value="<?php echo isset($settings['theme_color']) ? esc_attr($settings['theme_color']) : '#D5E0EB'; ?>" data-default-color="#D5E0EB">
-    <p class="description"><?php echo esc_html__('Choose the browser toolbar color displayed when your PWA opens.', 'pwa-for-wp'); ?></p>
+    <p class="description"><?php echo esc_html__('Select the theme color for the browser toolbar.', 'pwa-for-wp'); ?></p>
     <?php
 }
 
@@ -2741,53 +2719,6 @@ add_action('admin_enqueue_scripts', 'pwaforwp_enqueue_style_js');
  *
  * @return type json string
  */
-function pwaforwp_send_query_message()
-{   
-
-    if (! current_user_can(pwaforwp_current_user_can()) ) {
-        return;
-    }
-    if (! isset($_POST['pwaforwp_security_nonce']) ) {
-        return; 
-    }
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-    if (!wp_verify_nonce($_POST['pwaforwp_security_nonce'], 'pwaforwp_ajax_check_nonce') ) {
-        return;  
-    }
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-        $message    = sanitize_textarea_field($_POST['message']);
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotValidated    
-        $message .= "<table>
-        				<tr><td>Plugin</td><td>".esc_html__('PWA for wp', 'pwa-for-wp')." </td></tr>
-        				<tr><td>Version</td><td>".PWAFORWP_PLUGIN_VERSION."</td></tr>
-        			</table>";
-        $user       = wp_get_current_user();
-        
-    if($user) {
-            
-        $user_data  = $user->data;        
-        $user_email = $user_data->user_email;       
-        //php mailer variables
-        $to = 'team@magazine3.in';
-        $subject = "PWA Customer Query";
-        $headers = 'From: '. esc_attr($user_email) . "\r\n" .
-        'Reply-To: ' . esc_attr($user_email) . "\r\n";
-        // Load WP components, no themes.                      
-        $sent = wp_mail($to, $subject, wp_strip_all_tags($message), $headers);        
-            
-        if($sent) {
-            echo wp_json_encode(array('status'=>'t'));            
-        }else{
-            echo wp_json_encode(array('status'=>'f'));            
-        }
-            
-    }
-                        
-        wp_die();           
-}
-
-add_action('wp_ajax_pwaforwp_send_query_message', 'pwaforwp_send_query_message');
-
 
 
 
