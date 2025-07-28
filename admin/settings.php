@@ -70,6 +70,7 @@ function pwaforwp_admin_interface_render(){
 
 					echo '<a href="' . esc_url(pwaforwp_admin_link('features')) . '" class="nav-tab ' . esc_attr( $tab == 'features' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-admin-generic"></span> ' . esc_html__('Features','pwa-for-wp') . '</a>';
 		            
+                                        echo '<a href="' . esc_url(pwaforwp_admin_link('push_notification')) . '" class="nav-tab ' . esc_attr( $tab == 'push_notification' ? 'nav-tab-active' : '') . '\"><span class="dashicons dashicons-bell"></span> ' . esc_html__('Push Notifications','pwa-for-wp') . '</a>';
 		            echo '<a href="' . esc_url(pwaforwp_admin_link('tools')) . '" class="nav-tab ' . esc_attr( $tab == 'tools' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-admin-tools"></span> ' . esc_html__('Tools','pwa-for-wp') . '</a>';
 
 		            echo '<a href="' . esc_url(pwaforwp_admin_link('other_setting')) . '" class="nav-tab ' . esc_attr( $tab == 'other_setting' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-admin-settings"></span> ' . esc_html__('Advance','pwa-for-wp') . '</a>';
@@ -78,8 +79,16 @@ function pwaforwp_admin_interface_render(){
 
 				echo '<a href="' . esc_url(pwaforwp_admin_link('help')) . '" class="nav-tab ' . esc_attr( $tab == 'help' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-editor-help"></span> ' . esc_html__('Help','pwa-for-wp') . '</a>';
 					?>
-				</h2>
-	            <form action="options.php" method="post" enctype="multipart/form-data" class="pwaforwp-settings-form">		
+                                </h2>
+                                <?php
+                                if ( $tab == 'push_notification' && class_exists( 'Push_Notification_Admin' ) ) {
+                                        $pn_admin = new Push_Notification_Admin();
+                                        $pn_admin->settings_init();
+                                        $pn_admin->admin_interface_render();
+                                        return;
+                                }
+                                ?>
+                    <form action="options.php" method="post" enctype="multipart/form-data" class="pwaforwp-settings-form">
 					<div class="form-wrap">
 						<?php
 						// Output nonce, action, and option_page fields for a settings page.

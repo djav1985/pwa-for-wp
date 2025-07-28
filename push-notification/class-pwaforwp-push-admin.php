@@ -1,24 +1,15 @@
 <?php
 /*
-Plugin Name: Push Notifications for WP - Self Hosted Web Push Notifications
-Plugin URI: https://wordpress.org/plugins/push-notification/
-Description: Push Notification allow admin to automatically notify your audience when you have published new content on your site or custom notices
-Author: Magazine3
-Version: 1.43
-Author URI: http://pushnotifications.io/
-Text Domain: push-notification
-Domain Path: /languages
-License: GPL2+
-*/
+ * Push Notification admin integration for PWA for WP.
+ * Formerly shipped as a standalone companion plugin.
+ */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define('PUSH_NOTIFICATION_PLUGIN_FILE',  __FILE__ );
-define('PUSH_NOTIFICATION_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
-define('PUSH_NOTIFICATION_PLUGIN_URL', plugin_dir_url( __FILE__ ));
+define('PUSH_NOTIFICATION_PLUGIN_DIR', PWAFORWP_PLUGIN_DIR . 'push-notification/');
+define('PUSH_NOTIFICATION_PLUGIN_URL', PWAFORWP_PLUGIN_URL . 'push-notification/');
 define('PUSH_NOTIFICATION_PLUGIN_VERSION', '1.43');
-define('PUSH_NOTIFICATION_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 /**
  * Initialize pwa functions
@@ -30,12 +21,11 @@ function push_notification_initialize(){
 	require_once PUSH_NOTIFICATION_PLUGIN_DIR."inc/admin/newsletter.php"; 
 	require_once PUSH_NOTIFICATION_PLUGIN_DIR."inc/compatibility/ultimate-member.php"; 
 	require_once PUSH_NOTIFICATION_PLUGIN_DIR."inc/admin/feedback-helper-functions.php";
-	if(is_admin()){
-		if ( is_multisite()) {
-			require_once PUSH_NOTIFICATION_PLUGIN_DIR."inc/admin/pn_multisite.php";
-		}
-		add_filter( 'plugin_action_links_' . PUSH_NOTIFICATION_PLUGIN_BASENAME,'push_notification_add_action_links', 10, 4);
-	}
+       if(is_admin()){
+               if ( is_multisite()) {
+                       require_once PUSH_NOTIFICATION_PLUGIN_DIR."inc/admin/pn_multisite.php";
+               }
+       }
 	if( !is_admin() || wp_doing_ajax() ){
 		require_once PUSH_NOTIFICATION_PLUGIN_DIR."inc/frontend/pn-frontend.php";
 	}
@@ -59,7 +49,7 @@ function push_notification_add_action_links($actions, $plugin_file, $plugin_data
     return array_merge( $actions, $mylinks ); // no validation check since $mylinks will always be non-empty array
 }
 
-register_activation_hook( PUSH_NOTIFICATION_PLUGIN_FILE, 'push_notification_on_activate' );
+
 
 function push_notification_on_activate( $network_wide ) {
 	/** Setup notification feature in PWA-for-wp*/

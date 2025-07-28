@@ -52,8 +52,14 @@ require_once PWAFORWP_PLUGIN_DIR."/admin/class-pwaforwp-newsletter.php";
 
 require_once PWAFORWP_PLUGIN_DIR."/service-work/class-pwaforwp-file-creation.php";
 require_once PWAFORWP_PLUGIN_DIR."/service-work/class-pwaforwp-file-creation-init.php"; 
-require_once PWAFORWP_PLUGIN_DIR."/service-work/class-pwaforwp-push-notification.php"; 
+require_once PWAFORWP_PLUGIN_DIR."/service-work/class-pwaforwp-push-notification.php";
+require_once PWAFORWP_PLUGIN_DIR."push-notification/class-pwaforwp-push-admin.php";
 require_once PWAFORWP_PLUGIN_DIR."/3rd-party/3rd-party-file-loading.php";
+
+if ( class_exists( 'Push_Notification_Admin' ) ) {
+    $pwaforwp_push_admin = new Push_Notification_Admin();
+    $pwaforwp_push_admin->init();
+}
 
 if ( pwaforwp_is_admin() ) {
 

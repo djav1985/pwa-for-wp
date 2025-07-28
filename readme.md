@@ -19,6 +19,7 @@ Tags: PWA, Review, Progressive Web Apps, Mobile, Web Manifest, Manifest, Offline
 PWA plugin is bringing the power of the Progressive Web Apps to the WP & AMP to take the user experience to the next level!
 
 You can give the APP-like experience to your audience which will get your website to their home screen and works instantly like an APP with offline support.
+This release bundles our Push Notifications module directly with the plugin.
 
 ## Features: 
 * <strong>Swipe Navigation in PWA :</strong> Adds swipe left / right feature to load next and previous articles.
@@ -77,6 +78,8 @@ Yes, Absolutely! We would suggest you send your feature request by creating an i
 You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 
 ## Changelog
+= 1.7.82 (Unreleased) =
+* Feature: Push Notifications plugin merged into main plugin.
 == Changelog ==
 = 1.7.79 (06 June 2025) =
 * Enhancement : The firebase has changed the PN configurations, need to review #947

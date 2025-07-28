@@ -1385,3 +1385,24 @@ function custom_pwaforwp_whitelabel_longtext($longtext) {
 }
 add_filter('pwaforwp_whitelabel_longtext', 'custom_pwaforwp_whitelabel_longtext');
 
+
+function pwaforwp_migrate_push_notification_options() {
+    $settings = get_option( 'pwaforwp_settings', array() );
+    $migrated = false;
+    $old_settings = get_option( 'push_notification_settings', null );
+    if ( $old_settings ) {
+        $settings['push_notification']['settings'] = $old_settings;
+        delete_option( 'push_notification_settings' );
+        $migrated = true;
+    }
+    $old_auth = get_option( 'push_notification_auth_settings', null );
+    if ( $old_auth ) {
+        $settings['push_notification']['auth_settings'] = $old_auth;
+        delete_option( 'push_notification_auth_settings' );
+        $migrated = true;
+    }
+    if ( $migrated ) {
+        update_option( 'pwaforwp_settings', $settings );
+    }
+}
+add_action( 'plugins_loaded', 'pwaforwp_migrate_push_notification_options' );
