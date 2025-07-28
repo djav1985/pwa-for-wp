@@ -59,12 +59,12 @@ require_once PWAFORWP_PLUGIN_DIR."push-notification/class-pwaforwp-push-admin.ph
 require_once PWAFORWP_PLUGIN_DIR."/3rd-party/3rd-party-file-loading.php";
 
 
-if ( class_exists( 'Push_Notification_Admin' ) ) {
+if (class_exists('Push_Notification_Admin') ) {
     $pwaforwp_push_admin = new Push_Notification_Admin();
     $pwaforwp_push_admin->init();
 }
 
-if ( pwaforwp_is_admin() ) {
+if (pwaforwp_is_admin() ) {
 
     add_filter('plugin_action_links_' . PWAFORWP_PLUGIN_BASENAME, 'pwaforwp_add_action_links');
     include_once PWAFORWP_PLUGIN_DIR."admin/settings.php";

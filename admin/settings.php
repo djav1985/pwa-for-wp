@@ -76,21 +76,21 @@ function pwaforwp_admin_interface_render()
 
                     echo '<a href="' . esc_url(pwaforwp_admin_link('general')) . '" class="nav-tab ' . esc_attr($tab == 'general' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-welcome-view-site"></span> ' . esc_html__('Setup', 'pwa-for-wp') . '</a>';
 
-					echo '<a href="' . esc_url(pwaforwp_admin_link('features')) . '" class="nav-tab ' . esc_attr( $tab == 'features' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-admin-generic"></span> ' . esc_html__('Features','pwa-for-wp') . '</a>';
-		            
-                                        echo '<a href="' . esc_url(pwaforwp_admin_link('push_notification')) . '" class="nav-tab ' . esc_attr( $tab == 'push_notification' ? 'nav-tab-active' : '') . '\"><span class="dashicons dashicons-bell"></span> ' . esc_html__('Push Notifications','pwa-for-wp') . '</a>';
-		            echo '<a href="' . esc_url(pwaforwp_admin_link('tools')) . '" class="nav-tab ' . esc_attr( $tab == 'tools' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-admin-tools"></span> ' . esc_html__('Tools','pwa-for-wp') . '</a>';
+                    echo '<a href="' . esc_url(pwaforwp_admin_link('features')) . '" class="nav-tab ' . esc_attr($tab == 'features' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-admin-generic"></span> ' . esc_html__('Features', 'pwa-for-wp') . '</a>';
+                    
+                                        echo '<a href="' . esc_url(pwaforwp_admin_link('push_notification')) . '" class="nav-tab ' . esc_attr($tab == 'push_notification' ? 'nav-tab-active' : '') . '\"><span class="dashicons dashicons-bell"></span> ' . esc_html__('Push Notifications', 'pwa-for-wp') . '</a>';
+                    echo '<a href="' . esc_url(pwaforwp_admin_link('tools')) . '" class="nav-tab ' . esc_attr($tab == 'tools' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-admin-tools"></span> ' . esc_html__('Tools', 'pwa-for-wp') . '</a>';
 
 
                     echo '<a href="' . esc_url(pwaforwp_admin_link('other_setting')) . '" class="nav-tab ' . esc_attr($tab == 'other_setting' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-admin-settings"></span> ' . esc_html__('Advance', 'pwa-for-wp') . '</a>';
 
                                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- all data already escapped.
 
-				echo '<a href="' . esc_url(pwaforwp_admin_link('help')) . '" class="nav-tab ' . esc_attr( $tab == 'help' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-editor-help"></span> ' . esc_html__('Help','pwa-for-wp') . '</a>';
-					?>
+                    echo '<a href="' . esc_url(pwaforwp_admin_link('help')) . '" class="nav-tab ' . esc_attr($tab == 'help' ? 'nav-tab-active' : '') . '"><span class="dashicons dashicons-editor-help"></span> ' . esc_html__('Help', 'pwa-for-wp') . '</a>';
+                    ?>
                                 </h2>
                                 <?php
-                                if ( $tab == 'push_notification' && class_exists( 'Push_Notification_Admin' ) ) {
+                                if ($tab == 'push_notification' && class_exists('Push_Notification_Admin') ) {
                                         $pn_admin = new Push_Notification_Admin();
                                         $pn_admin->settings_init();
                                         $pn_admin->admin_interface_render();
@@ -98,22 +98,22 @@ function pwaforwp_admin_interface_render()
                                 }
                                 ?>
                     <form action="options.php" method="post" enctype="multipart/form-data" class="pwaforwp-settings-form">
-					<div class="form-wrap">
-						<?php
-						// Output nonce, action, and option_page fields for a settings page.
-						settings_fields( 'pwaforwp_setting_dashboard_group' );						
-						
-						echo "<div class='pwaforwp-dashboard' ".( $tab != 'dashboard' ? 'style="display:none;"' : '').">";
-						// Status
-						do_settings_sections( 'pwaforwp_dashboard_section' );	// Page slug
-						echo "</div>";
+                    <div class="form-wrap">
+                        <?php
+                        // Output nonce, action, and option_page fields for a settings page.
+                        settings_fields('pwaforwp_setting_dashboard_group');                        
+                        
+                        echo "<div class='pwaforwp-dashboard' ".( $tab != 'dashboard' ? 'style="display:none;"' : '').">";
+                        // Status
+                        do_settings_sections('pwaforwp_dashboard_section');    // Page slug
+                        echo "</div>";
 
-						echo "<div class='pwaforwp-general pwaforwp-subheading-wrap' ".( $tab != 'general' ? 'style="display:none;"' : '').">";
-							/*Sub menu tabs*/
+                        echo "<div class='pwaforwp-general pwaforwp-subheading-wrap' ".( $tab != 'general' ? 'style="display:none;"' : '').">";
+                        /*Sub menu tabs*/
 
-							echo '<div class="pwaforwp-sub-tab-headings">
-									<span data-tab-id="subtab-general" class="selected">'.esc_html__('General','pwa-for-wp').'</span>&nbsp;|&nbsp;
-									<span data-tab-id="subtab-design">'.esc_html__('Design','pwa-for-wp').'</span>
+                        echo '<div class="pwaforwp-sub-tab-headings">
+									<span data-tab-id="subtab-general" class="selected">'.esc_html__('General', 'pwa-for-wp').'</span>&nbsp;|&nbsp;
+									<span data-tab-id="subtab-design">'.esc_html__('Design', 'pwa-for-wp').'</span>
 								</div>';
                         echo '<div class="pwaforwp-subheading">';
                                 // general Application Settings
