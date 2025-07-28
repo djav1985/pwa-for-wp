@@ -36,9 +36,13 @@ class PN_Server_Request{
 
 		$response = self::sendRequest($verifyUrl, $data, 'post');
 
-		$push_notification_auth_settings = get_option('push_notification_auth_settings');
+                $settings = get_option( 'pwaforwp_settings', array() );
+                $push_notification_auth_settings = array();
+                if ( isset( $settings['push_notification']['auth_settings'] ) ) {
+                        $push_notification_auth_settings = $settings['push_notification']['auth_settings'];
+                }
 
-		$push_notification_auth_settings['user_token'] = sanitize_text_field($user_token);
+                $push_notification_auth_settings['user_token'] = sanitize_text_field($user_token);
 
 		if($response['status']==200){
 			$response['response'] = array_map( 'sanitize_text_field',  $response['response']  );
@@ -47,11 +51,8 @@ class PN_Server_Request{
 
 			$push_notification_auth_settings['messageManager'] = $response['response']['messageManager'];
 
-			if ( is_multisite() ) {
-				update_site_option('push_notification_auth_settings', $push_notification_auth_settings,false);
-			}else{
-				update_option('push_notification_auth_settings', $push_notification_auth_settings,false);
-			}
+                        $settings['push_notification']['auth_settings'] = $push_notification_auth_settings;
+                        update_option( 'pwaforwp_settings', $settings, false );
 		}
 
 
@@ -98,15 +99,13 @@ class PN_Server_Request{
 			$language_code = pll_current_language();
         }
 
-		if ( is_multisite() ) {
-			$is_multisite = 'yes';
-            $weblink = get_site_url();
-			$push_notification_auth_settings = get_site_option( 'push_notification_auth_settings', array() ); 
-        } else {
-			$is_multisite = 'no';
-            $weblink = home_url();
-			$push_notification_auth_settings = get_option( 'push_notification_auth_settings', array() );
-        }
+                $is_multisite = is_multisite() ? 'yes' : 'no';
+        $weblink = is_multisite() ? get_site_url() : home_url();
+                $settings = get_option( 'pwaforwp_settings', array() );
+                $push_notification_auth_settings = array();
+                if ( isset( $settings['push_notification']['auth_settings'] ) ) {
+                        $push_notification_auth_settings = $settings['push_notification']['auth_settings'];
+                }
 
         $user_token = $push_notification_auth_settings['user_token'];
 
@@ -154,7 +153,11 @@ class PN_Server_Request{
 
 		$response = self::sendRequest($verifyUrl, $data, 'post');
 
-		$push_notification_auth_settings = get_option('push_notification_details_settings', array());
+                $settings = get_option( 'pwaforwp_settings', array() );
+                $push_notification_auth_settings = array();
+                if ( isset( $settings['push_notification']['details_settings'] ) ) {
+                        $push_notification_auth_settings = $settings['push_notification']['details_settings'];
+                }
 
 		if ( $response['status'] == 200 ) {
 
@@ -165,7 +168,8 @@ class PN_Server_Request{
 
 		}
 
-		update_option( 'push_notification_details_settings', $push_notification_auth_settings, false );
+                $settings['push_notification']['details_settings'] = $push_notification_auth_settings;
+                update_option( 'pwaforwp_settings', $settings, false );
 
 		return $response;
 
