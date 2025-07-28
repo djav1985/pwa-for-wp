@@ -166,7 +166,7 @@ function pwaforwp_admin_interface_render()
                         echo "</div>";
                                    
 
-                            ?>
+                        ?>
                     </div>
                     <div class="button-wrapper">
                                     <input type="hidden" name="pwaforwp_settings[manualfileSetup]" value="1">
@@ -178,24 +178,27 @@ function pwaforwp_admin_interface_render()
                 </form>
 
             </div>
-<?php
+    <?php
 } // end pwaforwp_admin_interface_render
 /* WP Settings API */
 add_action('admin_init', 'pwaforwp_settings_init');
 
-function pwaforwp_settings_init(){
+function pwaforwp_settings_init()
+{
     $settings = pwaforwp_defaultSettings(); 
-    if( isset($settings['loading_icon_display_admin']) && $settings['loading_icon_display_admin'] && is_admin() ){
+    if(isset($settings['loading_icon_display_admin']) && $settings['loading_icon_display_admin'] && is_admin() ) {
         add_action('admin_footer', 'pwaforwp_loading_icon');
         add_action('admin_print_footer_scripts', 'pwaforwp_loading_icon_scripts');
         add_action('admin_print_styles', 'pwaforwp_loading_icon_styles');
     }
     add_action('admin_print_styles', 'pwaforwp_loading_select2_styles');
-    register_setting( 'pwaforwp_setting_dashboard_group', 'pwaforwp_settings','pwaforwp_sanitize_fields' );
+    register_setting('pwaforwp_setting_dashboard_group', 'pwaforwp_settings', 'pwaforwp_sanitize_fields');
 
-    add_settings_section('pwaforwp_dashboard_section', esc_html__('Installation Status','pwa-for-wp').'<span class="pwafw-tooltip"><i class="dashicons dashicons-editor-help"></i> 
+    add_settings_section(
+        'pwaforwp_dashboard_section', esc_html__('Installation Status', 'pwa-for-wp').'<span class="pwafw-tooltip"><i class="dashicons dashicons-editor-help"></i> 
                         <span class="pwafw-help-subtitle">'.esc_html__('PWA status verification', 'pwa-for-wp').' <a href="https://pwa-for-wp.com/docs/article/how-to-install-setup-pwa-in-amp/" target="_blank">'.esc_html__('Learn more', 'pwa-for-wp').'</a></span>
-                    </span>', '__return_false', 'pwaforwp_dashboard_section');
+                    </span>', '__return_false', 'pwaforwp_dashboard_section'
+    );
         // Manifest status
         add_settings_field(
             'pwaforwp_manifest_status',                                // ID
@@ -230,7 +233,7 @@ function pwaforwp_settings_init(){
         // Description
         add_settings_field(
             'pwaforwp_app_description',                                    // ID
-            esc_html__('App Description', 'pwa-for-wp' ),        // Title
+            esc_html__('App Description', 'pwa-for-wp'),        // Title
             'pwaforwp_description_callback',                                // CB
             'pwaforwp_general_section',                        // Page slug
             'pwaforwp_general_section'                        // Settings Section ID
@@ -420,12 +423,12 @@ function pwaforwp_settings_init(){
             'pwaforwp_other_setting_section'                        // Settings Section ID
         );
                 add_settings_field(
-            'pwaforwp_force_update_sw_setting_setting',                            // ID
-            esc_html__('Force Update Service Worker', 'pwa-for-wp'),    // Title
-            'pwaforwp_force_update_sw_setting_callback',                            // CB
-            'pwaforwp_other_setting_section',                        // Page slug
-            'pwaforwp_other_setting_section'                        // Settings Section ID
-        );                
+                    'pwaforwp_force_update_sw_setting_setting',                            // ID
+                    esc_html__('Force Update Service Worker', 'pwa-for-wp'),    // Title
+                    'pwaforwp_force_update_sw_setting_callback',                            // CB
+                    'pwaforwp_other_setting_section',                        // Page slug
+                    'pwaforwp_other_setting_section'                        // Settings Section ID
+                );                
         add_settings_field(
             'pwaforwp_add_to_home',                                    // ID
             esc_html__('Add To Home On Element Click', 'pwa-for-wp'),        // Title
@@ -459,12 +462,12 @@ function pwaforwp_settings_init(){
             'pwaforwp_utmtracking_setting_section'                        // Settings Section ID
         );                
                 add_settings_field(
-            'pwaforwp_exclude_url_setting',                            // ID
-            esc_html__('Urls Exclude From Cache List', 'pwa-for-wp'),    // Title
-            'pwaforwp_url_exclude_from_cache_list_callback',                            // CB
-            'pwaforwp_other_setting_section',                        // Page slug
-            'pwaforwp_other_setting_section'                        // Settings Section ID
-        );
+                    'pwaforwp_exclude_url_setting',                            // ID
+                    esc_html__('Urls Exclude From Cache List', 'pwa-for-wp'),    // Title
+                    'pwaforwp_url_exclude_from_cache_list_callback',                            // CB
+                    'pwaforwp_other_setting_section',                        // Page slug
+                    'pwaforwp_other_setting_section'                        // Settings Section ID
+                );
         add_settings_field(
             'pwaforwp_cache_time_setting',                            // ID
             esc_html__('Cached time', 'pwa-for-wp'),    // Title
@@ -502,7 +505,7 @@ function pwaforwp_settings_init(){
         );
         add_settings_field(
             'pwaforwp_reset_cookies_method_setting',                            // ID
-            '<label for="pwaforwp_settings[reset_cookies]"><b>'.esc_html__('Reset cookies','pwa-for-wp').'</b></label>',    // Title
+            '<label for="pwaforwp_settings[reset_cookies]"><b>'.esc_html__('Reset cookies', 'pwa-for-wp').'</b></label>',    // Title
             'pwaforwp_reset_cookies_method_setting_callback',                            // CB
             'pwaforwp_other_setting_section',                        // Page slug
             'pwaforwp_other_setting_section'                        // Settings Section ID
@@ -514,15 +517,15 @@ function pwaforwp_settings_init(){
             'pwaforwp_other_setting_section',                        // Page slug
             'pwaforwp_other_setting_section'                        // Settings Section ID
         );
-        if( function_exists('is_super_admin') &&  is_super_admin() ){
-            add_settings_field(
-                'pwaforwp_role_based_access_setting',                            // ID
-                esc_html__('Role Based Access', 'pwa-for-wp'),    // Title
-                'pwaforwp_role_based_access_setting_callback',                            // CB
-                'pwaforwp_other_setting_section',                        // Page slug
-                'pwaforwp_other_setting_section'                        // Settings Section ID
-            );
-        }
+    if(function_exists('is_super_admin') &&  is_super_admin() ) {
+        add_settings_field(
+            'pwaforwp_role_based_access_setting',                            // ID
+            esc_html__('Role Based Access', 'pwa-for-wp'),    // Title
+            'pwaforwp_role_based_access_setting_callback',                            // CB
+            'pwaforwp_other_setting_section',                        // Page slug
+            'pwaforwp_other_setting_section'                        // Settings Section ID
+        );
+    }
         add_settings_field(
             'pwaforwp_offline_message_setting',                            // ID
             '<label for="pwaforwp_settings[offline_message_setting]"><b>'.esc_html__('Offline Message', 'pwa-for-wp').'</b></label>',    // Title
@@ -538,11 +541,11 @@ function pwaforwp_settings_init(){
             'pwaforwp_other_setting_section'                        // Settings Section ID
         );
                 add_settings_field(
-                        'pwaforwp_enable_pull_to_refresh_setting',             // ID
-                        '<label for="pwaforwp_settings[enable_pull_to_refresh]"><b>'.esc_html__('Pull to Refresh', 'pwa-for-wp').'</b></label>',   // Title
-                        'pwaforwp_enable_pull_to_refresh_setting_callback',    // CB
-                        'pwaforwp_other_setting_section',                      // Page slug
-                        'pwaforwp_other_setting_section'                       // Settings Section ID
+                    'pwaforwp_enable_pull_to_refresh_setting',             // ID
+                    '<label for="pwaforwp_settings[enable_pull_to_refresh]"><b>'.esc_html__('Pull to Refresh', 'pwa-for-wp').'</b></label>',   // Title
+                    'pwaforwp_enable_pull_to_refresh_setting_callback',    // CB
+                    'pwaforwp_other_setting_section',                      // Page slug
+                    'pwaforwp_other_setting_section'                       // Settings Section ID
                 );
         add_settings_field(
             'pwaforwp_force_rememberme_setting',                            // ID
@@ -604,12 +607,12 @@ function pwaforwp_settings_init(){
 
         add_settings_section('pwaforwp_compatibility_setting_section', '', '__return_false', 'pwaforwp_compatibility_setting_section');
                 add_settings_field(
-            'pwaforwp_one_signal_support',                                    // ID
-            '<label for="pwaforwp_settings[one_signal_support_setting]"><b>'.esc_html__('OneSignal', 'pwa-for-wp').'</b></label>',        // Title
-            'pwaforwp_one_signal_support_callback',                                // CB
-            'pwaforwp_compatibility_setting_section',                        // Page slug
-            'pwaforwp_compatibility_setting_section'                        // Settings Section ID
-        );
+                    'pwaforwp_one_signal_support',                                    // ID
+                    '<label for="pwaforwp_settings[one_signal_support_setting]"><b>'.esc_html__('OneSignal', 'pwa-for-wp').'</b></label>',        // Title
+                    'pwaforwp_one_signal_support_callback',                                // CB
+                    'pwaforwp_compatibility_setting_section',                        // Page slug
+                    'pwaforwp_compatibility_setting_section'                        // Settings Section ID
+                );
         add_settings_field(
             'pwaforwp_pushnami_support',                            // ID
             '<label for="pwaforwp_settings[pushnami_support_setting]"><b>'.esc_html__('Pushnami', 'pwa-for-wp').'</b></label>',                    // Title
@@ -675,7 +678,8 @@ function pwaforwp_settings_init(){
         
 }
 
-function pwaforwp_sanitize_fields($inputs=array()){
+function pwaforwp_sanitize_fields($inputs=array())
+{
     $fields_type_data = pwaforwp_fields_and_type('type');
 
     foreach ($inputs as $key => $value) {
@@ -696,19 +700,19 @@ function pwaforwp_sanitize_fields($inputs=array()){
                 $inputs[sanitize_key($key)] = $value;
             }else{
                 switch ($fields_type) {
-                    case 'text':
-                        $inputs[sanitize_key($key)] = sanitize_text_field($value);
-                        break;
-                    case 'textarea':
-                        $inputs[sanitize_key($key)] = sanitize_textarea_field($value);
-                        break;
-                    case 'checkbox':
-                        $inputs[sanitize_key($key)] = filter_var($value, FILTER_SANITIZE_NUMBER_INT);
-                        break;
+                case 'text':
+                    $inputs[sanitize_key($key)] = sanitize_text_field($value);
+                    break;
+                case 'textarea':
+                    $inputs[sanitize_key($key)] = sanitize_textarea_field($value);
+                    break;
+                case 'checkbox':
+                    $inputs[sanitize_key($key)] = filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+                    break;
                     
-                    default:
-                        $inputs[sanitize_key($key)] = sanitize_text_field($value);
-                        break;
+                default:
+                    $inputs[sanitize_key($key)] = sanitize_text_field($value);
+                    break;
                 }
                 
             }
@@ -728,7 +732,8 @@ function pwaforwp_sanitize_fields($inputs=array()){
 }
 
 
-function pwaforwp_caching_strategies_setting_callback(){
+function pwaforwp_caching_strategies_setting_callback()
+{
     $settings = pwaforwp_defaultSettings();
     $arrayOPT = array(
         'staleWhileRevalidate' => 'Stale While Revalidate',
@@ -753,7 +758,8 @@ function pwaforwp_caching_strategies_setting_callback(){
         </select>
         <br/>
         <label style="padding-top: 5px;">
-            <input type="checkbox" name="pwaforwp_settings[change_default_on_login]" value="1" <?php if (isset($settings['change_default_on_login']) && $settings['change_default_on_login'] == 1) { echo 'checked'; } ?>>
+            <input type="checkbox" name="pwaforwp_settings[change_default_on_login]" value="1" <?php if (isset($settings['change_default_on_login']) && $settings['change_default_on_login'] == 1) { echo 'checked'; 
+} ?>>
         <p><?php echo esc_html__('If you have a login for normal users (it help users to get updates content)', 'pwa-for-wp'); ?></p></label>
         </td>
     </tr>
@@ -2157,48 +2163,31 @@ function pwaforwp_orientation_callback()
     </label>
     
     <p class="description">
-        <?php echo esc_html__( 'Orientation of application on devices. When set to Follow Device Orientation your application will rotate as the device is rotated.', 'pwa-for-wp' ); ?>
+        <?php echo esc_html__('Orientation of application on devices. When set to Follow Device Orientation your application will rotate as the device is rotated.', 'pwa-for-wp'); ?>
     </p>
 
+<?php
 }
 
-function pwaforwp_display_callback()
-{
-    
-    $settings = pwaforwp_defaultSettings();         
+function pwaforwp_display_callback() {
+    $settings = pwaforwp_defaultSettings();
     ?>
-    
-    <!-- Orientation Dropdown -->
+    <!-- Display Dropdown -->
     <label for="pwaforwp_settings[display]">
         <select name="pwaforwp_settings[display]" id="pwaforwp_settings[display]">
-            <option value="" <?php if (isset($settings['display']) ) { selected($settings['display'], ''); 
-} ?>>
-                <?php echo esc_html__('Device display', 'pwa-for-wp'); ?>
-            </option>
-            <option value="fullscreen" <?php if (isset($settings['display']) ) { selected($settings['display'], 'fullscreen'); 
-} ?>>
-                <?php echo esc_html__('Fullscreen', 'pwa-for-wp'); ?>
-            </option>
-            <option value="standalone" <?php if (isset($settings['display']) ) { selected($settings['display'], 'standalone'); 
-} ?>>
-                <?php echo esc_html__('Standalone', 'pwa-for-wp'); ?>
-            </option>
-            <option value="minimal-ui" <?php if (isset($settings['display']) ) { selected($settings['display'], 'minimal-ui'); 
-} ?>>
-                <?php echo esc_html__('Minimal-ui', 'pwa-for-wp'); ?>
-            </option>
-            <option value="browser" <?php if (isset($settings['display']) ) { selected($settings['display'], 'browser'); 
-} ?>>
-                <?php echo esc_html__('Browser', 'pwa-for-wp'); ?>
-            </option>
+            <option value="" <?php echo (isset($settings['display']) && $settings['display'] === '') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Device display', 'pwa-for-wp'); ?></option>
+            <option value="fullscreen" <?php echo (isset($settings['display']) && $settings['display'] === 'fullscreen') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Fullscreen', 'pwa-for-wp'); ?></option>
+            <option value="standalone" <?php echo (isset($settings['display']) && $settings['display'] === 'standalone') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Standalone', 'pwa-for-wp'); ?></option>
+            <option value="minimal-ui" <?php echo (isset($settings['display']) && $settings['display'] === 'minimal-ui') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Minimal-ui', 'pwa-for-wp'); ?></option>
+            <option value="browser" <?php echo (isset($settings['display']) && $settings['display'] === 'browser') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Browser', 'pwa-for-wp'); ?></option>
         </select>
     </label>
     <p class="description">
-        <?php echo esc_html__( 'Select how the app should appear when launched from the home screen (fullscreen, standalone, minimal-ui, or browser).', 'pwa-for-wp' ); ?>
+        <?php echo esc_html__('Select how the app should appear when launched from the home screen (fullscreen, standalone, minimal-ui, or browser).', 'pwa-for-wp'); ?>
     </p>
-
     <?php
 }
+
 function pwaforwp_apple_status_bar_callback()
 {
     $settings = pwaforwp_defaultSettings();         
@@ -2222,7 +2211,7 @@ function pwaforwp_apple_status_bar_callback()
     </label>
     
     <p class="description">
-        <?php echo esc_html__( 'The status bar at the top of the screen (which usually displays the time and battery status).', 'pwa-for-wp' ); ?>
+        <?php echo esc_html__('The status bar at the top of the screen (which usually displays the time and battery status).', 'pwa-for-wp'); ?>
     </p>
 
     <?php
@@ -2719,60 +2708,27 @@ add_action('admin_enqueue_scripts', 'pwaforwp_enqueue_style_js');
  *
  * @return type json string
  */
-
-
-
-
-function pwaforwp_features_settings()
-{
-    $feturesArray = array(
-                'notification' => array(
-                                    'enable_field' => esc_html__('notification_feature', 'pwa-for-wp'),
-                                    'section_name' => esc_html__('pwaforwp_push_notification_section', 'pwa-for-wp'),
-                                    'setting_title' =>  esc_html__('Push notification', 'pwa-for-wp'),
-                                    'tooltip_option' => esc_html__('send notification to users', 'pwa-for-wp'),
-                                    'tooltip_link'    => 'https://pwa-for-wp.com/docs/article/how-to-use-push-notifications-in-pwa/'
-                                    ),
-                'precaching' => array(
-                                    'enable_field' => esc_html__('precaching_feature', 'pwa-for-wp'),
-                                    'section_name' => esc_html__('pwaforwp_precaching_setting_section', 'pwa-for-wp'),
-                                    'setting_title' =>  esc_html__('Pre Caching', 'pwa-for-wp'),
-                                    'tooltip_option' => esc_html__('Pre-Cache pages and posts on page load', 'pwa-for-wp'),
-                                    'tooltip_link'  => 'https://pwa-for-wp.com/docs/article/setting-up-precaching-in-pwa/',
-                                    ),
-                'addtohomebanner' => array(
-                                    'enable_field' => esc_html__('addtohomebanner_feature', 'pwa-for-wp'),
-                                    'section_name' => esc_html__('pwaforwp_addtohomescreen_setting_section', 'pwa-for-wp'),
-                                    'setting_title' =>  esc_html__('Custom Add To Home Banner', 'pwa-for-wp'),
-                                    'tooltip_option' => esc_html__('Add a banner website for PWA app install', 'pwa-for-wp'),
-                                    'tooltip_link'  => 'https://pwa-for-wp.com/docs/article/how-to-add-custom-add-to-homescreen-banner/',
-                                    ),
-                'utmtracking' => array(
-                                    'enable_field' => esc_html__('utmtracking_feature', 'pwa-for-wp'),
-                                    'section_name' => esc_html__('pwaforwp_utmtracking_setting_section', 'pwa-for-wp'),
-                                    'setting_title' => esc_html__('UTM Tracking', 'pwa-for-wp'),
-                                    'tooltip_option'=> esc_html__('Urchin Traffic Monitor Tracking', 'pwa-for-wp'),
-                                    'tooltip_link'    => 'https://pwa-for-wp.com/docs/article/how-to-add-utm-tracking-in-pwa/'
-                                    ),
-                'loader' => array(
-                                    'enable_field' => esc_html__('loader_feature', 'pwa-for-wp'),
-                                    'section_name' => esc_html__('pwaforwp_loaders_setting_section', 'pwa-for-wp'),
-                                    'setting_title' => esc_html__('Loader', 'pwa-for-wp'),
-                                    'tooltip_option'=> esc_html__('Loader for complete website', 'pwa-for-wp'),
-                                    'tooltip_link'    => 'https://pwa-for-wp.com/docs/article/how-to-use-loading-icon-library-for-pwa/'
-                                    ),
-                'urlhandler' => array(
-                                        'enable_field' => esc_html__('urlhandler_feature', 'pwa-for-wp'),
-                                        'section_name' => esc_html__('pwaforwp_urlhandler_setting_section', 'pwa-for-wp'),
-                                        'setting_title' => esc_html__('URL Handlers', 'pwa-for-wp'),
-                                        'tooltip_option'=> esc_html__('PWA as URL Handlers allows apps like music.example.com to register themselves as URL handlers so that links from outside of the PWA', 'pwa-for-wp'),
-                                        'tooltip_link'  => 'https://pwa-for-wp.com/docs/article/how-to-use-urlhandler-for-pwa/'
-                                        ),
-                'visibility' => array(
-                                        'enable_field' => esc_html__('visibility_feature', 'pwa-for-wp'),
-                                        'section_name' => esc_html__('pwaforwp_visibility_setting_section', 'pwa-for-wp'),
-                                        'setting_title' => esc_html__('Visibility', 'pwa-for-wp'),
-                                        'tooltip_option' => esc_html__('PWA visibility allows apps to control the visibility of the APP on specific pages, posts, and post-types', 'pwa-for-wp'),
+function pwaforwp_orientation_callback() {
+    $settings = pwaforwp_defaultSettings();
+    ?>
+    <!-- Orientation Dropdown -->
+    <label for="pwaforwp_settings[orientation]">
+        <select name="pwaforwp_settings[orientation]" id="pwaforwp_settings[orientation]">
+            <option value="" <?php echo (isset($settings['orientation']) && $settings['orientation'] === '') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Follow Device Orientation', 'pwa-for-wp'); ?></option>
+            <option value="portrait" <?php echo (isset($settings['orientation']) && $settings['orientation'] === 'portrait') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Portrait', 'pwa-for-wp'); ?></option>
+            <option value="landscape" <?php echo (isset($settings['orientation']) && $settings['orientation'] === 'landscape') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Landscape', 'pwa-for-wp'); ?></option>
+            <option value="any" <?php echo (isset($settings['orientation']) && $settings['orientation'] === 'any') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Auto', 'pwa-for-wp'); ?></option>
+            <option value="landscape-primary" <?php echo (isset($settings['orientation']) && $settings['orientation'] === 'landscape-primary') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Landscape-primary', 'pwa-for-wp'); ?></option>
+            <option value="landscape-secondary" <?php echo (isset($settings['orientation']) && $settings['orientation'] === 'landscape-secondary') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Landscape-secondary', 'pwa-for-wp'); ?></option>
+            <option value="portrait-primary" <?php echo (isset($settings['orientation']) && $settings['orientation'] === 'portrait-primary') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Portrait-primary', 'pwa-for-wp'); ?></option>
+            <option value="portrait-secondary" <?php echo (isset($settings['orientation']) && $settings['orientation'] === 'portrait-secondary') ? 'selected="selected"' : ''; ?>><?php echo esc_html__('Portrait-secondary', 'pwa-for-wp'); ?></option>
+        </select>
+    </label>
+    <p class="description">
+        <?php echo esc_html__('Orientation of application on devices. When set to Follow Device Orientation your application will rotate as the device is rotated.', 'pwa-for-wp'); ?>
+    </p>
+    <?php
+}
                                         'tooltip_link'  => 'https://pwa-for-wp.com/docs/article/setting-up-visibility-in-pwa/',
                                         )
         );
