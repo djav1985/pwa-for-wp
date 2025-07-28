@@ -200,9 +200,9 @@ function pwaforwp_admin_interface_render()
                 </form>
 
             </div>
-    WP Settings API
-*/
-add_action('admin_init', 'pwaforwp_settings_init');
+    <?php
+    /* WP Settings API */
+    add_action('admin_init', 'pwaforwp_settings_init');
 
 function pwaforwp_settings_init(){
     $settings = pwaforwp_defaultSettings(); 
