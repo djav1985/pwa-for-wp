@@ -2,7 +2,7 @@
 Contributors: magazine3
 Requires at least: 3.0
 Tested up to: 6.8
-Stable tag: 1.7.80
+Stable tag: 1.7.81
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: PWA, Progressive Web Apps, Manifest, Offline, Cache
@@ -18,6 +18,7 @@ You can give the APP-like experience to your audience which will get your websit
 * <strong>Swipe Navigation in PWA :</strong> Adds swipe left / right feature to load next and previous articles.
 * <strong>WP Hide & Security Enhancer Compatibility </strong>
 * <strong>Disable Scrollbar</strong>: Hide scrollbar in PWA app.
+* <strong>Pull to Refresh</strong>: Swipe down to reload the current page.
 * <strong>AMP Support</strong>: Full PWA compatibility for AMP.  It works well with AMPforWP & AMP for WordPress by Automattic.
 * NEW: Multi site support
 * NEW: UTM Tracking
@@ -65,6 +66,9 @@ Yes, Absolutely! We would suggest you send your feature request by creating an i
 You can contact us from [here](https://pwa-for-wp.com/contact-us/)
 
 == Changelog ==
+= 1.7.81 (01 Aug 2025)
+* Feature : Added Pull to Refresh option allowing users to reload the page by swiping down.
+
 = 1.7.80 (24 July 2025) =
 * Compatibility : Need to make it compatible with the EventChamp theme. #961
 * Bug Fixed : Issue with Swipe Navigation in PWA #963

@@ -1,3 +1,6 @@
+= 1.7.81 (01 Aug 2025)
+* Feature : Added Pull to Refresh option allowing users to reload the page by swiping down.
+
 = 1.7.80 (24 July 2025) =
 * Compatibility : Need to make it compatible with the EventChamp theme. #961
 * Bug Fixed : Issue with Swipe Navigation in PWA #963
