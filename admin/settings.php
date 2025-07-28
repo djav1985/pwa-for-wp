@@ -691,8 +691,6 @@ function pwaforwp_settings_init(){
             'pwaforwp_push_notification_section'                        // Settings Section ID
         );
                 
-        );
-                
                 
                 
         
@@ -750,45 +748,44 @@ function pwaforwp_sanitize_fields($inputs=array()){
     
 }
 
-    // Get Settings
-    $settings = pwaforwp_defaultSettings(); 
-    $arrayOPT = array(
-                    'staleWhileRevalidate'  => 'Stale While Revalidate',
-                    'networkFirst'          => 'Network First',
-                    'cacheFirst'            => 'Cache First',
-                    'networkOnly'           => 'Network Only'
-                );
 
+function pwaforwp_caching_strategies_setting_callback(){
+    $settings = pwaforwp_defaultSettings();
+    $arrayOPT = array(
+        'staleWhileRevalidate' => 'Stale While Revalidate',
+        'networkFirst'         => 'Network First',
+        'cacheFirst'           => 'Cache First',
+        'networkOnly'          => 'Network Only',
+    );
     ?>
     <tr>
         <td><label><b><?php echo esc_html__('Default caching strategy', 'pwa-for-wp'); ?></b></label></td>
         <td><select name="pwaforwp_settings[default_caching]">
-    <?php if(is_array($arrayOPT) && !empty($arrayOPT)) {
+    <?php if (is_array($arrayOPT) && !empty($arrayOPT)) {
         foreach ($arrayOPT as $key => $opval) {
-            $sel = "";
-            if($settings['default_caching']==$key) {$sel = "selected"; 
+            $sel = '';
+            if ($settings['default_caching'] == $key) {
+                $sel = 'selected';
             }
             echo '<option value="'.esc_attr($key).'" '.esc_attr($sel).'>'.esc_html($opval).'</option>';
         }
     }
     ?>
-
         </select>
         <br/>
         <label style="padding-top: 5px;">
-        <input type="checkbox" name="pwaforwp_settings[change_default_on_login]" value="1" <?php if(isset($settings['change_default_on_login']) && $settings['change_default_on_login']==1 ) { echo 'checked'; 
-}?>><p>
-    <?php echo esc_html__('If you have a login for normal users (it help users to get updates content)', 'pwa-for-wp'); ?>
-        </p></label>
+            <input type="checkbox" name="pwaforwp_settings[change_default_on_login]" value="1" <?php if (isset($settings['change_default_on_login']) && $settings['change_default_on_login'] == 1) { echo 'checked'; } ?>>
+        <p><?php echo esc_html__('If you have a login for normal users (it help users to get updates content)', 'pwa-for-wp'); ?></p></label>
         </td>
     </tr>
     <tr>
         <td><label><b><?php echo esc_html__('Caching strategy for CSS and JS Files', 'pwa-for-wp'); ?></b></label></td>
         <td><select name="pwaforwp_settings[default_caching_js_css]">
-    <?php if(is_array($arrayOPT) && !empty($arrayOPT)) {
+    <?php if (is_array($arrayOPT) && !empty($arrayOPT)) {
         foreach ($arrayOPT as $key => $opval) {
-            $sel = "";
-            if($settings['default_caching_js_css']==$key) {$sel = "selected"; 
+            $sel = '';
+            if ($settings['default_caching_js_css'] == $key) {
+                $sel = 'selected';
             }
             echo '<option value="'.esc_attr($key).'" '.esc_attr($sel).'>'.esc_html($opval).'</option>';
         }
@@ -799,10 +796,11 @@ function pwaforwp_sanitize_fields($inputs=array()){
     <tr>
         <td><label><b><?php echo esc_html__('Caching strategy for images', 'pwa-for-wp'); ?></b></label></td>
         <td><select name="pwaforwp_settings[default_caching_images]">
-    <?php if(is_array($arrayOPT) && !empty($arrayOPT)) {
+    <?php if (is_array($arrayOPT) && !empty($arrayOPT)) {
         foreach ($arrayOPT as $key => $opval) {
-            $sel = "";
-            if($settings['default_caching_images']==$key) {$sel = "selected"; 
+            $sel = '';
+            if ($settings['default_caching_images'] == $key) {
+                $sel = 'selected';
             }
             echo '<option value="'.esc_attr($key).'" '.esc_attr($sel).'>'.esc_html($opval).'</option>';
         }
@@ -813,10 +811,11 @@ function pwaforwp_sanitize_fields($inputs=array()){
     <tr>
         <td><label><b><?php echo esc_html__('Caching strategy for fonts', 'pwa-for-wp'); ?></b></label></td>
         <td><select name="pwaforwp_settings[default_caching_fonts]">
-    <?php if(is_array($arrayOPT) && !empty($arrayOPT)) {
+    <?php if (is_array($arrayOPT) && !empty($arrayOPT)) {
         foreach ($arrayOPT as $key => $opval) {
-            $sel = "";
-            if($settings['default_caching_fonts']==$key) {$sel = "selected"; 
+            $sel = '';
+            if ($settings['default_caching_fonts'] == $key) {
+                $sel = 'selected';
             }
             echo '<option value="'.esc_attr($key).'" '.esc_attr($sel).'>'.esc_html($opval).'</option>';
         }
@@ -826,7 +825,6 @@ function pwaforwp_sanitize_fields($inputs=array()){
     </tr>
     <?php
 }
-
 function pwaforwp_cache_time_setting_callback()
 {
     // Get Settings
