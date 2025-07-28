@@ -343,7 +343,7 @@ function pwaforwp_settings_init(){
         add_settings_field(
             'pwaforwp_orientation',                                    // ID
             esc_html__('Orientation', 'pwa-for-wp'),        // Title
-            'pwaforpw_orientation_callback',                                // CB
+            'pwaforwp_orientation_callback',                                // CB
             'pwaforwp_general_section',                        // Page slug
             'pwaforwp_general_section'                        // Settings Section ID
         ); 
@@ -352,7 +352,7 @@ function pwaforwp_settings_init(){
         add_settings_field(
             'pwaforwp_display',                                    // ID
             esc_html__('Display', 'pwa-for-wp'),        // Title
-            'pwaforpw_display_callback',                                // CB
+            'pwaforwp_display_callback',                                // CB
             'pwaforwp_general_section',                        // Page slug
             'pwaforwp_general_section'                        // Settings Section ID
         );
@@ -538,7 +538,7 @@ function pwaforwp_settings_init(){
         );
         if( function_exists('is_super_admin') &&  is_super_admin() ){
             add_settings_field(
-                'pwaforwp_disallow_data_tracking_setting',                            // ID
+                'pwaforwp_role_based_access_setting',                            // ID
                 esc_html__('Role Based Access', 'pwa-for-wp'),    // Title
                 'pwaforwp_role_based_access_setting_callback',                            // CB
                 'pwaforwp_other_setting_section',                        // Page slug
@@ -1471,7 +1471,7 @@ function pwaforwp_background_color_callback()
     
     <!-- Background Color -->
         <input type="text" name="pwaforwp_settings[background_color]" id="pwaforwp_settings[background_color]" class="pwaforwp-colorpicker" data-alpha-enabled="true" value="<?php echo isset($settings['background_color']) ? esc_attr($settings['background_color']) : '#D5E0EB'; ?>" data-default-color="#D5E0EB">
-        <p class="description"></p>
+        <p class="description"><?php echo esc_html__('This color fills the splash screen while your PWA is loading.', 'pwa-for-wp'); ?></p>
     <?php
 }
 function pwaforwp_theme_color_callback()
@@ -1481,7 +1481,7 @@ function pwaforwp_theme_color_callback()
     
     <!-- Background Color -->
     <input type="text" name="pwaforwp_settings[theme_color]" id="pwaforwp_settings[theme_color]" class="pwaforwp-colorpicker" data-alpha-enabled="true" value="<?php echo isset($settings['theme_color']) ? esc_attr($settings['theme_color']) : '#D5E0EB'; ?>" data-default-color="#D5E0EB">
-    <p class="description"></p>
+    <p class="description"><?php echo esc_html__('Choose the browser toolbar color displayed when your PWA opens.', 'pwa-for-wp'); ?></p>
     <?php
 }
 
@@ -2134,7 +2134,7 @@ function pwaforwp_start_page_callback()
     <?php
 }
 
-function pwaforpw_orientation_callback()
+function pwaforwp_orientation_callback()
 {
     
     $settings = pwaforwp_defaultSettings();         
@@ -2184,7 +2184,7 @@ function pwaforpw_orientation_callback()
 
 }
 
-function pwaforpw_display_callback()
+function pwaforwp_display_callback()
 {
     
     $settings = pwaforwp_defaultSettings();         
