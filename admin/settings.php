@@ -200,9 +200,10 @@ function pwaforwp_admin_interface_render()
                 </form>
 
             </div>
-    <?php
-    /* WP Settings API */
-    add_action('admin_init', 'pwaforwp_settings_init');
+<?php
+} // end pwaforwp_admin_interface_render
+/* WP Settings API */
+add_action('admin_init', 'pwaforwp_settings_init');
 
 function pwaforwp_settings_init(){
     $settings = pwaforwp_defaultSettings(); 
@@ -2181,7 +2182,6 @@ function pwaforpw_orientation_callback()
         <?php echo esc_html__( 'Orientation of application on devices. When set to Follow Device Orientation your application will rotate as the device is rotated.', 'pwa-for-wp' ); ?>
     </p>
 
-    <?php
 }
 
 function pwaforpw_display_callback()
@@ -2215,9 +2215,8 @@ function pwaforpw_display_callback()
             </option>
         </select>
     </label>
-    
     <p class="description">
-        <?php echo esc_html__( 'Orientation of application on devices. When set to Follow Device Orientation your application will rotate as the device is rotated.', 'pwa-for-wp' ); ?>
+        <?php echo esc_html__( 'Select how the app should appear when launched from the home screen (fullscreen, standalone, minimal-ui, or browser).', 'pwa-for-wp' ); ?>
     </p>
 
     <?php
