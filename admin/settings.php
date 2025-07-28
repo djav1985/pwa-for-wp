@@ -2178,7 +2178,7 @@ function pwaforpw_orientation_callback()
     </label>
     
     <p class="description">
-    <?php esc_html__('Orientation of application on devices. When set to Follow Device Orientation your application will rotate as the device is rotated.', 'pwa-for-wp'); ?>
+        <?php echo esc_html__( 'Orientation of application on devices. When set to Follow Device Orientation your application will rotate as the device is rotated.', 'pwa-for-wp' ); ?>
     </p>
 
     <?php
@@ -2217,7 +2217,7 @@ function pwaforpw_display_callback()
     </label>
     
     <p class="description">
-    <?php esc_html__('Orientation of application on devices. When set to Follow Device Orientation your application will rotate as the device is rotated.', 'pwa-for-wp'); ?>
+        <?php echo esc_html__( 'Orientation of application on devices. When set to Follow Device Orientation your application will rotate as the device is rotated.', 'pwa-for-wp' ); ?>
     </p>
 
     <?php
@@ -2245,7 +2245,7 @@ function pwaforwp_apple_status_bar_callback()
     </label>
     
     <p class="description">
-    <?php esc_html__('The status bar at the top of the screen (which usually displays the time and battery status).', 'pwa-for-wp'); ?>
+        <?php echo esc_html__( 'The status bar at the top of the screen (which usually displays the time and battery status).', 'pwa-for-wp' ); ?>
     </p>
 
     <?php
