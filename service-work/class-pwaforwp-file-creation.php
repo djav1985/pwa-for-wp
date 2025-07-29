@@ -446,9 +446,13 @@ class PWAforwp_File_Creation {
     }
     $pro_extension_exists = function_exists('pwaforwp_is_any_extension_active')?pwaforwp_is_any_extension_active():false;
     if($settings['404_page']!='other'){
-      $page404 		= user_trailingslashit(get_permalink( $settings['404_page'] ) ?  pwaforwp_https(get_permalink( $settings['404_page'] ))  :  pwaforwp_home_url());
+      if( isset( $settings['404_page'] ) && $settings['404_page'] != 0 ){
+        $page404 = user_trailingslashit( get_permalink( $settings['404_page'] ) ? pwaforwp_https( get_permalink( $settings['404_page'] ) ) : pwaforwp_home_url() );
+      } else {
+        $page404 = '';
+      }
     }else {
-      $page404 		= ($pro_extension_exists && user_trailingslashit(get_permalink( $settings['404_page'] )) ?  pwaforwp_https(esc_url( $settings['404_page_other'] ))  :  pwaforwp_home_url());
+      $page404 = ( $pro_extension_exists && user_trailingslashit(get_permalink( $settings['404_page'] )) ? pwaforwp_https(esc_url( $settings['404_page_other'] )) : pwaforwp_home_url() );
     }
 
 		$cacheTimerHtml = 3600; $cacheTimerCss = 86400;
@@ -556,7 +560,11 @@ class PWAforwp_File_Creation {
                                                             $swJsContent);                		
 		} 
                     
-                }                                          
+                }
+                if( empty( $page404 ) ) {
+                  $swJsContent = str_replace("'',", '', $swJsContent);
+                  $swJsContent = str_replace("const NOT_FOUND_CACHE_FILES = [\n];", 'const NOT_FOUND_CACHE_FILES = [];', $swJsContent);
+                }
           $swJsContent = apply_filters( 'pwaforwp_sw_js_template', $swJsContent );
           //fallback remove replacements    
           $swJsContent = str_replace(array(

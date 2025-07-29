@@ -441,7 +441,10 @@ let cachingStrategy = {
                                     }
                                         return response;
                                 }else if(response.status==404){
-                                    return cachingStrategy.Notfoundpage();
+                                    if (NOT_FOUND_PAGE) {
+                                        return cachingStrategy.Notfoundpage();
+                                    }
+                                    return response;
                                 } else if( cache.match(event.request) ){
                                     return cache.match(event.request);
                                 }else {
@@ -489,7 +492,10 @@ let cachingStrategy = {
                                     }
                                     return response;
                                 }else if(response.status==404){
-                                    return cachingStrategy.Notfoundpage();
+                                    if (NOT_FOUND_PAGE) {
+                                        return cachingStrategy.Notfoundpage();
+                                    }
+                                    return response;
                                 } else if(cache.match(event.request)){
                                     return cache.match(event.request)
                                 } else {
