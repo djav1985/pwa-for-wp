@@ -52,8 +52,6 @@ require_once PWAFORWP_PLUGIN_DIR."/admin/class-pwaforwp-newsletter.php";
 
 require_once PWAFORWP_PLUGIN_DIR."/service-work/class-pwaforwp-file-creation.php";
 require_once PWAFORWP_PLUGIN_DIR."/service-work/class-pwaforwp-file-creation-init.php"; 
-require_once PWAFORWP_PLUGIN_DIR."/service-work/class-pwaforwp-push-notification.php"; 
-require_once PWAFORWP_PLUGIN_DIR."/3rd-party/3rd-party-file-loading.php";
 
 if ( pwaforwp_is_admin() ) {
 

@@ -13,8 +13,6 @@ class PWAFORWP_File_Creation_Init {
     public $swjs_init_amp;
     public $minifest_init_amp;
     public $swhtml_init_amp;  
-    public $firebase_manifest_init;
-    public $push_notification_js;
              
     public function __construct(){
         
@@ -27,19 +25,8 @@ class PWAFORWP_File_Creation_Init {
         $this->swjs_init_amp          = $this->wppath.apply_filters('pwaforwp_amp_sw_file_name',       "pwa-amp-sw".pwaforwp_multisite_postfix().".js");
         $this->minifest_init_amp      = $this->wppath.apply_filters('pwaforwp_amp_manifest_file_name', "pwa-amp-manifest".pwaforwp_multisite_postfix().".json");
         $this->swhtml_init_amp        = $this->wppath.apply_filters('pwaforwp_amp_sw_html_file_name',  "pwa-amp-sw".pwaforwp_multisite_postfix().".html");
-        $this->firebase_manifest_init = $this->wppath.apply_filters('pwaforwp_pn_manifest_file_name',  "pwa-push-notification-manifest".pwaforwp_multisite_postfix().".json");                         
-        $this->push_notification_js   = PWAFORWP_PLUGIN_DIR.'/assets/js/pwa-push-notification'.pwaforwp_multisite_postfix().".js";                         
     }
     
-    public function pwaforwp_push_notification_js($action = null){
-        $pwaSettings = pwaforwp_defaultSettings();
-        if( $pwaSettings['notification_feature']==1 && isset($pwaSettings['notification_options']) && $pwaSettings['notification_options']!='fcm_push'){
-            return; 
-        }
-        $pnjs_strContent = $this->fileCreation->pwaforwp_pnjs();
-        return pwaforwp_write_a_file($this->push_notification_js, $pnjs_strContent, $action);
-                                               
-    }
         
     public function pwaforwp_swjs_init($action = null){
         
