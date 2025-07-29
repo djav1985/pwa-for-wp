@@ -53,7 +53,7 @@ function pwaforwp_admin_interface_render(){
         pwaforwp_required_file_creation();                                 
 		settings_errors();
 	}
-        $tab = pwaforwp_get_tab('dashboard', array('dashboard','general', 'features','push_notification', 'other_setting', 'precaching_setting', 'tools','help'));
+        $tab = pwaforwp_get_tab('dashboard', array('dashboard','general', 'features','other_setting', 'precaching_setting', 'tools','help'));
                                                                         
         ?>
         <?php $pwa_longtext = apply_filters('pwaforwp_whitelabel_longtext', __( 'Progressive Web Apps For WP', 'pwa-for-wp' )); ?>
@@ -612,28 +612,6 @@ function pwaforwp_settings_init(){
 		);
 
 		add_settings_section('pwaforwp_compatibility_setting_section', '', '__return_false', 'pwaforwp_compatibility_setting_section');
-                add_settings_field(
-			'pwaforwp_one_signal_support',									// ID
-			'<label for="pwaforwp_settings[one_signal_support_setting]"><b>'.esc_html__('OneSignal', 'pwa-for-wp').'</b></label>',		// Title
-			'pwaforwp_one_signal_support_callback',								// CB
-			'pwaforwp_compatibility_setting_section',						// Page slug
-			'pwaforwp_compatibility_setting_section'						// Settings Section ID
-		);
-        add_settings_field(
-			'pwaforwp_pushnami_support',							// ID
-			'<label for="pwaforwp_settings[pushnami_support_setting]"><b>'.esc_html__('Pushnami', 'pwa-for-wp').'</b></label>',					// Title
-			'pwaforwp_pushnami_support_callback',					// CB
-			'pwaforwp_compatibility_setting_section',				// Page slug
-			'pwaforwp_compatibility_setting_section'				// Settings Section ID
-		);
-		add_settings_field(
-			'pwaforwp_webpushr_support',							// ID
-			'<label for="pwaforwp_settings[webpusher_support_setting]"><b>'.esc_html__('Webpushr', 'pwa-for-wp').'</b></label>',					// Title
-			'pwaforwp_webpushr_support_callback',					// CB
-			'pwaforwp_compatibility_setting_section',				// Page slug
-			'pwaforwp_compatibility_setting_section'				// Settings Section ID
-		);
-
 		add_settings_field(
 			'pwaforwp_wphide_support',							// ID
 			'<label for="pwaforwp_settings[wphide_support_setting]"><b>'.esc_html__('WP Hide & Security Enhancer', 'pwa-for-wp').'</b></label>',					// Title
@@ -669,18 +647,6 @@ function pwaforwp_settings_init(){
 		);  
                 
                 
-                add_settings_section('pwaforwp_push_notification_section', '', '__return_false', 'pwaforwp_push_notification_section');
-		// Splash Screen Background Color
-		add_settings_field(
-			'pwaforwp_push_notification',							// ID
-			'',	
-			'pwaforwp_push_notification_callback',							// CB
-			'pwaforwp_push_notification_section',						// Page slug
-			'pwaforwp_push_notification_section'						// Settings Section ID
-		);
-                
-}
-
 function pwaforwp_sanitize_fields($inputs=array()){
 	$fields_type_data = pwaforwp_fields_and_type('type');
 
@@ -1416,249 +1382,6 @@ function pwaforwp_theme_color_callback(){
 	<?php
 }
 
-function pwaforwp_push_notification_callback(){	
-    
-	$settings = pwaforwp_defaultSettings(); 
-	$selectedService = 'pushnotifications_io';
-	$pushnotifications_style = 'style="display:block;"';
-	$fcm_service_style = 'style="display:none;"'; 
-    if( (isset($settings['fcm_server_key']) && !empty($settings['fcm_server_key']) && !isset($settings['notification_options'])) 
-    	|| (isset($settings['notification_options']) && $settings['notification_options']=="fcm_push")
-    ){
-    	$selectedService = "fcm_push";
-    	$pushnotifications_style = 'style="display:none;"';
-		$fcm_service_style = 'style="display:block;"';
-    }
-    if( isset($settings['notification_options']) ){
-    	$selectedService = $settings['notification_options'];
-    	if(empty($selectedService)){
-    		$selectedService = "";
-	    	$pushnotifications_style = 'style="display:none;"';
-			$fcm_service_style = 'style="display:none;"';
-    	}
-    }
-
-
-        ?>        
-        
-        <div class="pwafowwp-server-key-section">
-        	<table class="pwaforwp-pn-options">
-        		<tbody>
-        			<th><?php echo esc_html__('Push notification integration', 'pwa-for-wp');?></th>
-        			<td>
-        				<select name="pwaforwp_settings[notification_options]" id="pwaforwp_settings[notification_options]" class="regular-text pwaforwp-pn-service">
-        					<option value=""><?php echo esc_html__('Select', 'pwa-for-wp') ?></option>
-        					<option value="pushnotifications_io" <?php selected('pushnotifications_io', $selectedService) ?>><?php echo esc_html__('PushNotifications.io (Recommended)', 'pwa-for-wp') ?></option>
-        					<option value="fcm_push" <?php selected('fcm_push', $selectedService) ?> ><?php echo esc_html__('FCM push notification', 'pwa-for-wp') ?></option>
-        				</select>
-        			</td>
-        		</tbody>
-        	</table>
-            <table class="pwaforwp-push-notificatoin-table" <?php 
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- using style in variable no need to esc.
-			echo $fcm_service_style; ?>>
-                <tbody>
-                   
-                    <tr>
-                        <th><?php echo esc_html__('Firebase Config', 'pwa-for-wp') ?></th>  
-                        <td>
-							<p><?php echo esc_html__('Note: You need to Create a new firebase project on ', 'pwa-for-wp') ?> <a href="https://firebase.google.com/" target="_blank"><?php echo esc_html__('firebase', 'pwa-for-wp') ?></a> <?php echo esc_html__('console, its completly free by google with some limitations.', 'pwa-for-wp') ?></p>
-                            <textarea class="regular-text" placeholder="{ <?php echo "\n"; ?>apiKey: '<Your Api Key>', <?php echo "\n"; ?>authDomain: '<Your Auth Domain>',<?php echo "\n"; ?>databaseURL: '<Your Database URL>',<?php echo "\n"; ?>projectId: '<Your Project Id>',<?php echo "\n"; ?>storageBucket: '<Your Storage Bucket>', <?php echo "\n"; ?>messagingSenderId: '<Your Messaging Sender Id>' <?php echo "\n"; ?>}" rows="8" cols="60" id="pwaforwp_settings[fcm_config]" name="pwaforwp_settings[fcm_config]"><?php echo isset($settings['fcm_config']) ? esc_attr($settings['fcm_config']) : ''; ?></textarea>
-
-							<p><?php echo esc_html__('Go to Firebase Console → Project Settings → Your Apps. Create a web app. You will get the config under SDK setup and configuration.', 'pwa-for-wp') ?></p>
-                           
-                        </td>
-                    </tr> 
-					<tr>
-						<th><?php echo esc_html__('FCM Service Account', 'pwa-for-wp'); ?></th>
-						<td>
-							<input type="file" id="fcm_service_account_json" accept=".json">
-							<?php if (!empty($settings['fcm_server_key'])): ?>
-								<p class="description"><b><?php echo esc_html__('File uploaded:', 'pwa-for-wp') . ' <span id="fcm_server_key_url" style="color:#000;">' . esc_html(basename($settings['fcm_server_key'])); ?></span></b></p>
-							<?php endif; ?>
-							<p class="description"><?php echo esc_html__('Upload your Firebase service account JSON file. It will be stored securely.', 'pwa-for-wp'); ?></p>
-							<p class="description"><?php echo esc_html__('Go to Firebase Console → Project Settings → Cloud Messaging → Manage Service Accounts. Select the Service account and click three dots then Manage Keys . Create a new key and project-name.json file will be downloaded automatically', 'pwa-for-wp'); ?></p>
-						</td>
-					</tr>
-                    <tr>
-                        <th><?php echo esc_html__('FCM Push Notification Icon', 'pwa-for-wp') ?></th>  
-                        <td>
-                            <input type="text" name="pwaforwp_settings[fcm_push_icon]" id="pwaforwp_settings[fcm_push_icon]" class="pwaforwp-fcm-push-icon regular-text" size="50" value="<?php echo isset( $settings['fcm_push_icon'] ) ? esc_attr( pwaforwp_https($settings['fcm_push_icon'])) : ''; ?>">
-							<button type="button" class="button pwaforwp-fcm-push-icon-upload" data-editor="content">
-								<span class="dashicons dashicons-format-image" style="margin-top: 4px;"></span> <?php echo esc_html__('Choose Icon', 'pwa-for-wp'); ?> 
-							</button>
-                            <p><?php echo esc_html__('Change Firebase push notification icon. Default: PWA icon', 'pwa-for-wp') ?> </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__('FCM Notification Budge Icon', 'pwa-for-wp') ?></th>  
-                        <td>
-                            <input type="text" name="pwaforwp_settings[fcm_budge_push_icon]" id="pwaforwp_settings[fcm_budge_push_icon]" class="pwaforwp-fcm-push-budge-icon regular-text" value="<?php echo isset( $settings['fcm_budge_push_icon'] ) ? esc_attr( pwaforwp_https($settings['fcm_budge_push_icon'])) : ''; ?>">
-							<button type="button" class="button pwaforwp-fcm-push-budge-icon-upload" data-editor="content">
-								<span class="dashicons dashicons-format-image" style="margin-top: 4px;"></span> <?php echo esc_html__('Choose Icon', 'pwa-for-wp'); ?> 
-							</button>
-                            <p><?php echo esc_html__('Change Firebase push notification budge icon 96x96. Default: Chrome icon', 'pwa-for-wp') ?> </p>
-                        </td>
-                    </tr>                                                            
-                </tbody>   
-            </table>                   
-            <div class="pwaforwp-pn-recommended-options" <?php 
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- its has style only.
-			echo $pushnotifications_style; ?>>
-            	<div class="notification-banner" style="width:90%">
-            			<?php if(class_exists('Push_Notification_Admin')){ 
-            				$auth_settings = push_notification_auth_settings();
-            				if(!isset($auth_settings['user_token'])){
-            					echo '<div class="pwaforwp-center"><p>'.esc_html__('This feature requires to setup Push Notification','pwa-for-wp').' </p> <a href="'.esc_url_raw(admin_url('admin.php?page=push-notification')).'" target="_blank" class="button button-primary">'.esc_html__('Go to setup', 'pwa-for-wp').'</a></div>';
-            				}else{
-            					echo '<div class="pwaforwp-center"><p>'.esc_html__('Push notifications has it\'s separate options view','pwa-for-wp').'</p><a href="'. esc_url_raw(admin_url('admin.php?page=push-notification') ).'" class="button button-primary">'.esc_html__(' View Settings', 'pwa-for-wp').'</a></div>';
-            				}
-            			?>
-            			
-            		<?php }else{
-            			$allplugins = get_transient( 'plugin_slugs');
-						if($allplugins){
-							$allplugins = array_flip($allplugins);
-						}
-
-            			$activate_url ='';
-            			$class = 'not-exist';
-            			if(file_exists( PWAFORWP_PLUGIN_DIR."/../push-notification/push-notification.php") && !is_plugin_active('push-notification/push-notification.php') ){
-            				//plugin deactivated
-            				$class = 'pushnotification';
-            				$plugin = 'push-notification/push-notification.php';
-            				$action = 'activate';
-            				if ( strpos( $plugin, '/' ) ) {
-								$plugin = str_replace( '\/', '%2F', $plugin );
-							}
-							$url = sprintf( admin_url( 'plugins.php?action=' . $action . '&plugin=%s&plugin_status=all&paged=1&s' ), $plugin );
-							$activate_url = wp_nonce_url( $url, $action . '-plugin_' . $plugin );
-            			 }
-            			?>
-            			<div class="pwaforwp-center">
-	            			<p><?php echo esc_html__('This feature requires a Free plugin which integrates with a Free Push Notification service', 'pwa-for-wp'); ?>
-	            			</p>
-	            			<span data-activate-url="<?php echo esc_url($activate_url); ?>" 
-	            				 class="pwaforwp-install-require-plugin button button-primary <?php echo esc_attr($class); ?>" data-secure="<?php echo esc_attr(wp_create_nonce('verify_request')); ?>"
-	            				id="pushnotification">
-	            				<?php echo esc_html__('Install Plugin', 'pwa-for-wp'); ?>
-	            			</span>
-	            		</div>
-            			<?php
-            		} ?>
-	            	
-            	</div>
-            </div>
-        </div>
-        <div class="pwaforwp-notification-condition-section" <?php 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- using style only in this variable.
-		echo $fcm_service_style; ?> >
-        <div>
-            <h2><?php echo esc_html__('Send Notification On', 'pwa-for-wp') ?></h2>
-            <table class="pwaforwp-push-notificatoin-table">
-                <tbody>
-                    <tr>
-                        <th><?php echo esc_html__('Add New Post', 'pwa-for-wp') ?></th>  
-                        <td>
-                            <input  type="checkbox" name="pwaforwp_settings[on_add_post]" id="pwaforwp_settings[on_add_post]" class="pwaforwp-fcm-checkbox" <?php echo (isset( $settings['on_add_post'] ) &&  $settings['on_add_post'] == 1 ? 'checked="checked"' : ''); ?> value="1">
-                            <?php
-                            if(isset($settings['on_add_post']) && $settings['on_add_post'] == 1){
-                             echo '<p>'.esc_html__('Notification Title', 'pwa-for-wp').' <input type="text" name="pwaforwp_settings[on_add_post_notification_title]" id="on_add_post_notification_title" placeholder="'.esc_attr__('New Post', 'pwa-for-wp').'" value="'.esc_attr($settings['on_add_post_notification_title']).'"></p>';   
-                            }else{
-                             echo  '<p class="pwaforwp-hide">'.esc_html__('Notification Title', 'pwa-for-wp').' <input type="text" name="pwaforwp_settings[on_add_post_notification_title]" id="on_add_post_notification_title" placeholder="'.esc_attr__('New Post', 'pwa-for-wp').'" value="'.esc_attr($settings['on_add_post_notification_title']).'"></p>';  
-                            }
-                            ?>
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__('Update Post', 'pwa-for-wp') ?></th>  
-                        <td><input type="checkbox" name="pwaforwp_settings[on_update_post]" id="pwaforwp_settings[on_update_post]" class="pwaforwp-fcm-checkbox" <?php echo (isset( $settings['on_update_post'] ) &&  $settings['on_update_post'] == 1 ? 'checked="checked"' : ''); ?> value="1">
-                            <?php
-                            if(isset($settings['on_update_post']) && $settings['on_update_post']== 1){
-                             echo '<p>'.esc_html__('Notification Title', 'pwa-for-wp').' <input type="text" name="pwaforwp_settings[on_update_post_notification_title]" id="on_update_post_notification_title" placeholder="'.esc_attr__("Update Post","pwa-for-wp").'" value="'.(isset($settings['on_update_post_notification_title']) ? esc_attr($settings['on_update_post_notification_title']): '').'"></p>';   
-                            }else{
-                             echo  '<p class="pwaforwp-hide">'.esc_html__('Notification Title', 'pwa-for-wp').' <input type="text" name="pwaforwp_settings[on_update_post_notification_title]" id="on_update_post_notification_title" placeholder="'.esc_attr__("Update Post","pwa-for-wp").'" value="'.(isset($settings['on_update_post_notification_title']) ? esc_attr($settings['on_update_post_notification_title']) : '').'"></p>';  
-                            }
-                            ?>
-                        </td>
-                    </tr>
-                     <tr>
-                        <th><?php echo esc_html__('Add New Page', 'pwa-for-wp') ?></th>  
-                        <td><input type="checkbox" name="pwaforwp_settings[on_add_page]" id="pwaforwp_settings[on_add_page]" class="pwaforwp-fcm-checkbox" <?php echo (isset( $settings['on_add_page'] ) &&  $settings['on_add_page'] == 1 ? 'checked="checked"' : ''); ?> value="1">
-                            
-                            <?php
-                            if(isset($settings['on_add_page']) && $settings['on_add_page'] == 1){
-                             echo '<p>'.esc_html__('Notification Title', 'pwa-for-wp').' <input type="text" name="pwaforwp_settings[on_add_page_notification_title]" id="on_add_page_notification_title" placeholder="'.esc_attr__("New Page","pwa-for-wp").'" value="'.(isset($settings['on_add_page_notification_title']) ? esc_attr($settings['on_add_page_notification_title']) : '').'"></p>';   
-                            }else{
-                             echo  '<p class="pwaforwp-hide">'.esc_html__('Notification Title', 'pwa-for-wp').' <input type="text" name="pwaforwp_settings[on_add_page_notification_title]" id="on_add_page_notification_title" placeholder="'.esc_attr__("New Page","pwa-for-wp").'" value="'.(isset($settings['on_add_page_notification_title']) ? esc_attr($settings['on_add_page_notification_title']) : '').'"></p>';  
-                            }
-                            ?>
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__('Update Page', 'pwa-for-wp') ?></th>  
-                        <td><input type="checkbox" name="pwaforwp_settings[on_update_page]" id="pwaforwp_settings[on_update_page]" class="pwaforwp-fcm-checkbox" <?php echo (isset( $settings['on_update_page'] ) &&  $settings['on_update_page'] == 1 ? 'checked="checked"' : ''); ?> value="1">
-                            <?php
-                            if(isset($settings['on_update_page']) && $settings['on_update_page'] == 1){
-                             echo '<p>'.esc_html__('Notification Title', 'pwa-for-wp').' <input type="text" name="pwaforwp_settings[on_update_page_notification_title]" id="on_update_page_notification_title" placeholder="'.esc_attr__("Update Post","pwa-for-wp").'" value="'.(isset($settings['on_update_page_notification_title']) ? esc_attr($settings['on_update_page_notification_title']) : '').'"></p>';   
-                            }else{
-                             echo  '<p class="pwaforwp-hide">'.esc_html__('Notification Title', 'pwa-for-wp').' <input type="text" name="pwaforwp_settings[on_update_page_notification_title]" id="on_update_page_notification_title" placeholder="'.esc_attr__("Update Post","pwa-for-wp").'" value="'.(isset($settings['on_update_page_notification_title']) ? esc_attr($settings['on_update_page_notification_title']) : '').'"></p>';  
-                            }
-                            ?>
-                        </td>
-                    </tr>                                                            
-                </tbody>   
-            </table>                   
-        </div>        
-        <div>
-            <h2><?php echo esc_html__('Send Manual Notification', 'pwa-for-wp') ?></h2>
-            <table class="pwaforwp-push-notificatoin-table">
-                <tbody>
-                    
-                    <tr>
-                        <th><?php echo esc_html__('Title', 'pwa-for-wp') ?>:<br/><input style="width: 100%" placeholder="<?php esc_attr__("Title","pwa-for-wp") ?>" type="text" id="pwaforwp_notification_message_title" name="pwaforwp_notification_message_title" value="<?php echo esc_attr(get_bloginfo()); ?>">
-                            <br>
-			                   
-                        </th>  
-                        <td></td>
-                    </tr>
-                     <tr>
-                        <th>
-                        	<?php echo esc_html__('Redirection Url Onclick of notification', 'pwa-for-wp') ?>:<br/>
-                        	<input style="width: 100%" placeholder="<?php esc_attr__("URL","pwa-for-wp") ?>" type="text" id="pwaforwp_notification_message_url" name="pwaforwp_notification_message_url" value="<?php echo esc_attr(pwaforwp_home_url()); ?>">
-                            <br>
-			                   
-                        </th>  
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>
-                        	<?php echo esc_html__('Image Url', 'pwa-for-wp') ?>:<br/>
-                        	<input style="width: 100%" placeholder="<?php esc_attr__("Image URL","pwa-for-wp") ?>" type="text" id="pwaforwp_notification_message_image_url" name="pwaforwp_notification_message_image_url" value="">
-                            <br>
-			                   
-                        </th>  
-                        <td></td>
-                    </tr>   
-                    <tr>
-                        <th><?php echo esc_html__('Message', 'pwa-for-wp') ?>:<br/><textarea rows="5" cols="60" id="pwaforwp_notification_message" name="pwaforwp_notification_message"> </textarea>
-                            <button class="button pwaforwp-manual-notification"> <?php echo esc_html__('Send', 'pwa-for-wp'); ?> </button>
-                            <br>
-			                    <div class="pwaforwp-notification-success pwa_hide"></div>
-			                    <p class="pwaforwp-notification-error pwa_hide"></p>
-                        </th>  
-                        <td></td>
-                    </tr>
-                                                                                               
-                </tbody>   
-            </table>                   
-        </div>
-        </div>	
-	<?php
-}
-
 function pwaforwp_custom_banner_design_callback(){
     
         $settings = pwaforwp_defaultSettings(); ?>           
@@ -2179,31 +1902,6 @@ function pwaforwp_prefer_related_applications_callback(){
 	<?php
 }
 
-function pwaforwp_one_signal_support_callback(){
-	// Get Settings
-	$settings = pwaforwp_defaultSettings(); 
-	?>
-	<input type="checkbox" name="pwaforwp_settings[one_signal_support_setting]" id="pwaforwp_settings[one_signal_support_setting]" class="pwaforwp-onesignal-support" <?php echo (isset( $settings['one_signal_support_setting'] ) &&  $settings['one_signal_support_setting'] == 1 ? 'checked="checked"' : ''); ?> value="1">
-               
-	<?php
-}
-function pwaforwp_pushnami_support_callback(){
-	// Get Settings
-	$settings = pwaforwp_defaultSettings();
-	?>
-	<input type="checkbox" name="pwaforwp_settings[pushnami_support_setting]" id="pwaforwp_settings[pushnami_support_setting]" class="pwaforwp-pushnami-support" <?php echo (isset( $settings['pushnami_support_setting'] ) &&  $settings['pushnami_support_setting'] == 1 ? 'checked="checked"' : ''); ?> value="1">
-
-	<?php
-}
-
-function pwaforwp_webpushr_support_callback(){
-	// Get Settings
-	$settings = pwaforwp_defaultSettings();
-	?>
-	<input type="checkbox" name="pwaforwp_settings[webpusher_support_setting]" id="pwaforwp_settings[webpusher_support_setting]" class="pwaforwp-pushnami-support" <?php echo (isset( $settings['webpusher_support_setting'] ) &&  $settings['webpusher_support_setting'] == 1 ? 'checked="checked"' : ''); ?> value="1">
-
-	<?php
-}
 
 function pwaforwp_wphide_support_callback(){
 	// Get Settings
@@ -2662,13 +2360,6 @@ function pwaforwp_send_query_message(){
 		$allplugins = array_flip($allplugins);
 	}
 	$feturesArray = array(
-				'notification' => array(
-									'enable_field' => esc_html__('notification_feature', 'pwa-for-wp'),
-									'section_name' => esc_html__('pwaforwp_push_notification_section', 'pwa-for-wp'),
-									'setting_title' =>  esc_html__('Push notification', 'pwa-for-wp'),
-									'tooltip_option' => esc_html__('send notification to users', 'pwa-for-wp'),
-									'tooltip_link'	=> 'https://pwa-for-wp.com/docs/article/how-to-use-push-notifications-in-pwa/'
-									),
 				'precaching' => array(
 									'enable_field' => esc_html__('precaching_feature','pwa-for-wp'),
 									'section_name' => esc_html__('pwaforwp_precaching_setting_section', 'pwa-for-wp'),
@@ -2902,9 +2593,6 @@ function pwaforwp_send_query_message(){
 				echo '<div class="footer tab_view_submitbtn" style=""><button type="submit" class="button button-primary pwaforwp-submit-feature-opt">'.esc_html__('Submit', 'pwa-for-wp').'</button></div>';
 			echo '</div>';
 		echo '</div>';
-		$settingsHtml = $tooltipHtml = $warnings = '';
-		if($key=='notification' && empty($settings['notification_options'])){
-			$warnings = "<span class='pwafw-tooltip'><i id='notification-opt-stat' class='dashicons dashicons-warning' style='color: #ffb224d1;' title=''></i><span class='pwafw-help-subtitle'>".esc_html__('Need integration', 'pwa-for-wp')."</span></span>";
 		}
 		if(isset($settings[$featureVal['enable_field']]) && $settings[$featureVal['enable_field']]){
 			$settingsHtml = 'style="opacity:1;"';

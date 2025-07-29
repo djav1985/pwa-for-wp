@@ -128,29 +128,6 @@ function pwaforwp_frontend_enqueue(){
         
         if(isset($settings['normal_enable']) && $settings['normal_enable']==1){
             
-            if(isset($settings['fcm_server_key'])){
-                $server_key = $settings['fcm_server_key'];
-            }
-        
-            if(isset($settings['fcm_config'])){
-                $config     = $settings['fcm_config'];
-            }
-                        
-            if(isset($settings['notification_feature']) && $settings['notification_feature']==1 && isset($settings['notification_options']) && $settings['notification_options']=='fcm_push' && ($server_key !='' && $config !='')){             
-                                                                            
-                wp_register_script('pwaforwp-push-js', PWAFORWP_PLUGIN_URL . 'assets/js/pwa-push-notification'.pwaforwp_multisite_postfix().'.js', array('pwa-main-script'), $force_update_sw_setting_value, true);
-
-                $object_name = array(
-                    'ajax_url'                  => admin_url( 'admin-ajax.php' ),
-                    'pwa_ms_prefix'             => pwaforwp_multisite_postfix(),
-                    'pwa_home_url'              => pwaforwp_home_url(), 
-                    'pwaforwp_security_nonce'   => wp_create_nonce('pwaforwp_ajax_check_nonce')  
-                );
-
-                wp_localize_script('pwaforwp-push-js', 'pwaforwp_obj', $object_name);
-                wp_enqueue_script('pwaforwp-push-js');      
-                
-            }
          
             
             if(isset($settings['force_rememberme']) && $settings['force_rememberme']==1){
@@ -326,7 +303,6 @@ function pwaforwp_fields_and_type($data_type = 'value'){
         'custom_banner_title_color'=>array('type'=>'text','value'=>'#000'),
         'custom_banner_btn_color'=>array('type'=>'text','value'=>'#006dda'),
         'custom_banner_btn_text_color'=>array('type'=>'text','value'=>'#fff'),
-        'fcm_push_icon'   => array('type'=>'text','value'=>PWAFORWP_PLUGIN_URL . 'images/logo.png'),
         'background_color' 	=> array('type'=>'text','value'=>'#D5E0EB'),
         'theme_color' 		=> array('type'=>'text','value'=>'#D5E0EB'),
         'start_url' 		=> array('type'=>'text','value'=>0),
@@ -350,13 +326,8 @@ function pwaforwp_fields_and_type($data_type = 'value'){
         'default_caching_js_css'=> array('type'=>'text','value'=>'cacheFirst'),
         'default_caching_images'=> array('type'=>'text','value'=>'cacheFirst'),
         'default_caching_fonts' => array('type'=>'text','value'=>'cacheFirst'),
-        'on_add_post_notification_title' => array('type'=>'text','value'=>''),
         'is_static_manifest' => array('type'=>'checkbox','value'=>0),
 
-    /*Push notification services*/
-        'notification_options'  => array('type'=>'text','value'=>''),
-    /*Features settings*/
-        'notification_feature'  => array('type'=>'checkbox','value'=>0),
         'precaching_feature'    => array('type'=>'checkbox','value'=>0),
         'addtohomebanner_feature'=> array('type'=>'checkbox','value'=>0),
         'utmtracking_feature'   => array('type'=>'checkbox','value'=>0),
@@ -396,9 +367,6 @@ function pwaforwp_fields_and_type($data_type = 'value'){
         'prefetch_manifest_setting'=>array('type'=>'checkbox','value'=>0),
         'offline_google_setting'=>array('type'=>'checkbox','value'=>0),
 
-        'one_signal_support_setting'=>array('type'=>'checkbox','value'=>0),
-        'pushnami_support_setting'=>array('type'=>'checkbox','value'=>0),
-        'webpusher_support_setting'=>array('type'=>'checkbox','value'=>0),
         'wphide_support_setting'=>array('type'=>'checkbox','value'=>0),
 
         'pwa_uninstall_data'=>array('type'=>'checkbox','value'=>0),
@@ -660,14 +628,12 @@ function pwaforwp_required_file_creation( $action = null) {
 
     $fileCreationInit = new PWAFORWP_File_Creation_Init();
 
-    pwaforwp_onesignal_compatiblity( $action );
-    pwaforwp_pushnami()->pushnami_compatiblity( $action ); 
+    // Removed push notification integrations
                             
     $status = '';                    
     $status = $fileCreationInit->pwaforwp_swjs_init( $action );
     $status = $fileCreationInit->pwaforwp_manifest_init( $action );
     $status = $fileCreationInit->pwaforwp_swr_init( $action );
-    $status = $fileCreationInit->pwaforwp_push_notification_js( $action );
     
     
     if ( function_exists( 'ampforwp_is_amp_endpoint' ) || function_exists( 'is_amp_endpoint' ) ) {
@@ -679,17 +645,7 @@ function pwaforwp_required_file_creation( $action = null) {
         set_transient( 'pwaforwp_file_change_transient', true );
     }
     
-    if ( isset( $settings['fcm_server_key'] ) ) {
-            $server_key = $settings['fcm_server_key'];    
-    }
 
-    if ( isset( $settings['fcm_config'] ) ) {
-        $config = $settings['fcm_config'];   
-    }
-
-    if ( $server_key != '' && $config != '' ) {
-        $fileCreationInit->pwaforwp_swhtml_init_firebase_js( $action );  
-    }
     
 }
 
