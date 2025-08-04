@@ -321,7 +321,6 @@ function pwaforwp_fields_and_type($data_type = 'value'){
         'normal_enable'         => array('type'=>'checkbox','value'=>1),
         'amp_enable'            => array('type'=>'checkbox','value'=>1),
         'cached_timer'          => array('type'=>'text','value'=>array('html'=>3600,'css'=>86400)),
-        'serve_js_cache_menthod'=> array('type'=>'checkbox','value'=>false),
         'default_caching'       => array('type'=>'text','value'=>'cacheFirst'),
         'default_caching_js_css'=> array('type'=>'text','value'=>'cacheFirst'),
         'default_caching_images'=> array('type'=>'text','value'=>'cacheFirst'),
@@ -622,13 +621,9 @@ function pwaforwp_delete_pwa_files() {
 
 function pwaforwp_required_file_creation( $action = null) {
     
-    $settings = pwaforwp_defaultSettings(); 
-
-    $server_key = $config = '';       
 
     $fileCreationInit = new PWAFORWP_File_Creation_Init();
 
-    // Removed push notification integrations
                             
     $status = '';                    
     $status = $fileCreationInit->pwaforwp_swjs_init( $action );
@@ -742,7 +737,7 @@ function pwaforwp_service_workerUrls($url, $filename){
   $home_url       = pwaforwp_home_url();  
 
 
-  if( ( !pwaforwp_is_file_inroot() || $site_url!= $home_url) && !class_exists( 'WPPushnami' ) ){
+  if( ( !pwaforwp_is_file_inroot() || $site_url!= $home_url) ){
 	  $filename = str_replace(".", "-", $filename);
       $home_url = rtrim($home_url, "/");
       $home_url = add_query_arg(pwaforwp_query_var('sw_query_var'), 1, $home_url);
@@ -750,9 +745,6 @@ function pwaforwp_service_workerUrls($url, $filename){
       $url = $home_url;
   }
   
-  if(isset($settings['serve_js_cache_menthod']) && $settings['serve_js_cache_menthod']=='true'){
-    $url = esc_url_raw(admin_url( 'admin-ajax.php?action=pwaforwp_sw_files&'.pwaforwp_query_var('sw_query_var').'=1&'.pwaforwp_query_var('sw_file_var').'='.$filename ));
-  }
   return $url;
 }
 
@@ -1260,24 +1252,6 @@ function pwaforwp_local_file_get_contents( $file_path ) {
 
 }
 
-add_filter('pwaforwp_sw_register_template', 'pwaforwp_sw_register_apk_detect', 10, 1);
-
-function pwaforwp_sw_register_apk_detect($sw_template){
-
-    $pwaSettings = pwaforwp_defaultSettings();
-        if( $pwaSettings['notification_feature']==1 && isset($pwaSettings['notification_options']) && $pwaSettings['notification_options']=='pushnotifications_io'){
-            $sw_template .="	document.addEventListener('DOMContentLoaded', function () {
-                if (typeof pnScriptSetting !== 'undefined' && pnScriptSetting.pwaforwp_apk_only !== undefined && pnScriptSetting.pwaforwp_apk_only == 1) {
-                    const reffer = document.referrer; 
-                    if (reffer && reffer.includes('android-app://')) {
-                        sessionStorage.setItem('pwaforwp_mode', 'apk');
-                    }
-                }
-            });"; 
-        }
-    
-    return $sw_template;
-}
 
 function custom_pwaforwp_whitelabel_title($title) {
     $config_file_path = ABSPATH . 'pwa-config.php';

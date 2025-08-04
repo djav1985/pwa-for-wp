@@ -510,13 +510,6 @@ function pwaforwp_settings_init(){
 			'pwaforwp_other_setting_section'						// Settings Section ID
 		);
 		add_settings_field(
-			'pwaforwp_serve_cache_method_setting',							// ID
-			'<label for="pwaforwp_settings[serve_js_cache_menthod]"><b>'.esc_html__('PWA alternative method', 'pwa-for-wp').'</b></label>',	// Title
-			'pwaforwp_serve_cache_method_setting_callback',							// CB
-			'pwaforwp_other_setting_section',						// Page slug
-			'pwaforwp_other_setting_section'						// Settings Section ID
-		);
-		add_settings_field(
 			'pwaforwp_reset_cookies_method_setting',							// ID
 			'<label for="pwaforwp_settings[reset_cookies]"><b>'.esc_html__('Reset cookies','pwa-for-wp').'</b></label>',	// Title
 			'pwaforwp_reset_cookies_method_setting_callback',							// CB
@@ -820,14 +813,6 @@ function pwaforwp_swipe_navigation_setting_callback(){
 	<?php
 }
 
-function pwaforwp_serve_cache_method_setting_callback(){
-	// Get Settings
-	$settings = pwaforwp_defaultSettings(); 
-	?>
-	<input type="checkbox" name="pwaforwp_settings[serve_js_cache_menthod]" id="pwaforwp_settings[serve_js_cache_menthod]" class=""  <?php echo (isset( $settings['serve_js_cache_menthod'] ) && $settings['serve_js_cache_menthod']=='true'? esc_attr('checked') : ''); ?> data-uncheck-val="0" value="true">
-	<p><?php echo esc_html__('Enable(check) it when PWA with OneSignal or root permission functionality not working because of Cache','pwa-for-wp'); ?></p>
-	<?php
-}
 
 function pwaforwp_reset_cookies_method_setting_callback(){
 	// Get Settings
@@ -2521,18 +2506,6 @@ function pwaforwp_send_query_message(){
                                     'slug' => 'ofpwa',
                                     'tooltip_option'=> esc_html__('It auto saves the data on the fly', 'pwa-for-wp'),
 									'tooltip_link'	=> 'https://pwa-for-wp.com/docs/article/how-to-use-auto-save-forms/'
-                                    ),
-				'buddypress_notification' => array(
-                                    'enable_field' => esc_html__('buddypress_notification', 'pwa-for-wp'),
-                                    'section_name' => esc_html__('pwaforwp_buddypress_setting_section', 'pwa-for-wp'),
-                                    'setting_title' => esc_html__('Buddypress', 'pwa-for-wp'),
-                                    'is_premium'    => true,
-                                    'pro_link'      => $addonLists['bnpwa']['p-url'],
-                                    'pro_active'    => (is_plugin_active($addonLists['bnpwa']['p-slug'])? 1: 0),
-                                    'pro_deactive'    => (!is_plugin_active($addonLists['bnpwa']['p-slug']) && file_exists(PWAFORWP_PLUGIN_DIR."/../".$addonLists['bnpwa']['p-slug'])? 1: 0),
-                                    'slug' => 'bnpwa',
-                                    'tooltip_option'=> esc_html__('Support buddypress push notification with PWA and push notification', 'pwa-for-wp'),
-                                    'tooltip_link' => 'https://pwa-for-wp.com/docs/article/how-to-use-buddypress-for-pwaforwp/'
                                     ),
 				'quickaction' => array(
 									'enable_field' => esc_html__('quick_action', 'pwa-for-wp'),

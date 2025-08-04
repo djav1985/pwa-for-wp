@@ -28,29 +28,6 @@ class PWAFORWP_Utility{
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 	    $currentActivateModule = sanitize_text_field( wp_unslash($_REQUEST['activate']));
 
-	    switch($currentActivateModule){
-
-	    	case 'pushnotification': 
-
-	            $nonceUrl = add_query_arg(
-	                                    array(
-	                                        'action'        => 'activate',
-	                                        'plugin'        => 'push-notification',
-	                                        'plugin_status' => 'all',
-	                                        'paged'         => '1',
-	                                        '_wpnonce'      => wp_create_nonce( 'activate-plugin_push-notification' ),
-	                                    ),
-	                        esc_url(network_admin_url( 'plugins.php' ))
-	                        );
-	            $plugins[] = array(
-	                            'name' => 'push-notification',
-	                            'path_' => 'https://downloads.wordpress.org/plugin/push-notification.zip',
-	                            'path' => $nonceUrl,
-	                            'install' => 'push-notification/push-notification.php',
-	                        );
-	            $redirectSettingsUrl = admin_url('admin.php?page=push-notification&reference=pwaforwp');
-	        break;
-	    }
 
 	    if(count($plugins)>0){
 	       echo wp_json_encode( array( "status"=>200, "message"=>esc_html__("Module successfully Added",'pwa-for-wp'),'redirect_url'=>esc_url($redirectSettingsUrl) , "slug"=>$plugins[0]['name'], 'path'=> $plugins[0]['path'] ) );
