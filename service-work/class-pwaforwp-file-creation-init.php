@@ -75,33 +75,6 @@ class PWAFORWP_File_Creation_Init {
         return pwaforwp_write_a_file($this->swhtml_init_amp, $swHtmlContent, $action);
                  
     }
-    public function pwaforwp_swhtml_init_firebase_js($action = null){  
-        
-        $settings 	= pwaforwp_defaultSettings(); 
-        
-        $server_key     = $settings['fcm_server_key'];
-        $config         = $settings['fcm_config'];
-                                
-        $swjsContent    = $this->fileCreation->pwaforwp_swjs();
-        $status         = pwaforwp_write_a_file($this->swjs_init, $swjsContent, $action);
-                
-        $swjsContent    = $this->fileCreation->pwaforwp_swr();
-        $status         = pwaforwp_write_a_file($this->swr_init, $swjsContent, $action);
-        
-
-        //Dummy file to work FCM perfectly 
-        
-        if($server_key !='' && $config !=''){
-
-            $pn_sw_js       = $this->wppath."firebase-messaging-sw.js";  
-            $swjsContent    = '';
-            $status         =  pwaforwp_write_a_file($pn_sw_js, $swjsContent, $action);
-        
-        }
-                
-        return $status;
-                                
-    }    
 }
 
 add_action('wp_ajax_pwaforwp_download_setup_files', 'pwaforwp_download_setup_files');
