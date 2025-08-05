@@ -11,8 +11,10 @@ jQuery(document).ready(function($){
                        jQuery(".pwaforwp-feedback-notice").hide();
                       }
                     },
-                    error: function(response){                    
-                    console.log(response);
+                    error: function(response){
+                    if (window.console && console.error) {
+                        console.error(response);
+                    }
                     }
                     });
     
@@ -30,8 +32,10 @@ jQuery(document).ready(function($){
                        jQuery(".pwaforwp-feedback-notice").hide();
                       }
                     },
-                    error: function(response){                    
-                    console.log(response);
+                    error: function(response){
+                    if (window.console && console.error) {
+                        console.error(response);
+                    }
                     }
                     });    
         });

@@ -205,9 +205,8 @@ jQuery(document).ready(function($){
                             jQuery(".pwa-query-error").show();
                           }
                         },
-                        error: function(response){                    
-                        console.log(response);
-                        }
+                          error: function(response){
+                          }
                         });
         }else{
             if(jQuery.trim(message) =='' && customer ==''){
@@ -242,9 +241,8 @@ jQuery(document).ready(function($){
                             success:function(response){                               
                                 setTimeout(function(){ location.reload(); }, 1000);
                             },
-                            error: function(response){                    
-                            console.log(response);
-                            }
+                              error: function(response){
+                              }
                             }); 
                 
                 }
@@ -284,11 +282,10 @@ jQuery(document).ready(function($){
                             jQuery(".pwaforwp-manual-notification").text('Send');
                           }
                         },
-                        error: function(response){                    
-                        console.log(response);
-                        jQuery(".pwaforwp-manual-notification").prop('disabled', false);
-                        jQuery(".pwaforwp-manual-notification").text('Send');
-                        }
+                          error: function(response){
+                          jQuery(".pwaforwp-manual-notification").prop('disabled', false);
+                          jQuery(".pwaforwp-manual-notification").text('Send');
+                          }
                         });
 
                        
@@ -397,8 +394,7 @@ jQuery(document).ready(function($){
         if(jQuery(this).is(":checked")){
             chval = jQuery(this).val();
         }
-        console.log(jQuery(this).parent('label').find('#'+respectiveId), chval);
-        jQuery(this).parent('label').find('input[name="'+respectiveId+'"]').val(chval);
+          jQuery(this).parent('label').find('input[name="'+respectiveId+'"]').val(chval);
     })
         
         
@@ -414,8 +410,7 @@ jQuery(document).ready(function($){
         jQuery(".pwaforwp-checkbox").click(function(){
             
                     var data_id = jQuery(this).attr('data-id');
-                    console.log(data_id);
-            if(jQuery(this).prop("checked")){
+              if(jQuery(this).prop("checked")){
                 jQuery('.pwaforwp_'+data_id).removeClass('pwaforwp-hide');
             }else{
                 jQuery('.pwaforwp_'+data_id).addClass('pwaforwp-hide');
@@ -525,7 +520,6 @@ jQuery(document).ready(function($){
                 activate = '&activate=pushnotification';
             }
 
-        console.log(wp.updates);
 
 
         jQuery.ajax({
@@ -542,8 +536,7 @@ jQuery(document).ready(function($){
                             {
                                 slug: response.slug,
                                 success: function (pluginresponse) {
-                                    console.log(pluginresponse.activateUrl);
-                                    pwaforwp_Activate_Modules_Upgrade(pluginresponse.activateUrl, self, response, nonce)
+                                      pwaforwp_Activate_Modules_Upgrade(pluginresponse.activateUrl, self, response, nonce)
                                 }
                             }
                         );
@@ -842,7 +835,6 @@ var pwaforwp_Activate_Modules_Upgrade = function(url, self, response, nonce){
         if (typeof url === 'undefined' || !url) {
             return;
         }
-         console.log( 'Activating...' );
          self.html('Activating...');
          jQuery.ajax(
             {
@@ -854,8 +846,7 @@ var pwaforwp_Activate_Modules_Upgrade = function(url, self, response, nonce){
                     var msgplug = '';
                     if(self.attr('id')=='pushnotification'){
                         msgplug = 'push notification';
-                        console.log("push notification Activated");
-                        self.removeClass('updating-message')
+                          self.removeClass('updating-message')
                         self.removeClass("button")
                         self.removeClass('pwaforwp-install-require-plugin')
                         self.unbind('click');
@@ -879,8 +870,7 @@ var pwaforwp_Activate_Modules_Upgrade = function(url, self, response, nonce){
                     } else {
                         msg = 'Uncaught Error.\n' + jqXHR.responseText;
                     }
-                    console.log(msg);
-                },
+                  },
             }
         );
     }
@@ -955,7 +945,6 @@ var pwaforwp_showpopup = function(caption, inlineId, submitClass){
     function onFileReaderLoad(e){
         image=e.target.result;
         document.getElementById('thumbnail').src=e.target.result;
-        //console.log(image);
     };
     function pwa_getimageZip(e){
         e.disabled = true;
@@ -1341,7 +1330,6 @@ jQuery('.pwaforwp-maskable-input').keyup(function() {
 
 function pwaforwp_check_maskable_input() {
     jQuery('.pwaforwp-maskable-input').each(function() {
-        console.log(jQuery(this).val())
         if ( jQuery(this).val() == null || jQuery(this).val() == "") {
             jQuery(this).parents('td').find('.pwaforwp_js_remove_maskable').hide();
         }else{

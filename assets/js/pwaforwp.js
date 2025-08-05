@@ -4,7 +4,6 @@
 
 var showLoader = false;
 if (pwaforwp_is_mobile() && pwaforwp_js_obj.loader_mobile == "1" && screen.availWidth < 521) {
-    console.log(screen.availWidth);
     pwaforwp_play_loader();
 }
 if (pwaforwp_js_obj.loader_desktop == "1" && screen.availWidth > 520) {
@@ -279,3 +278,4 @@ document.addEventListener('DOMContentLoaded', function() {
     link.href = '/' + manifest_name;
     document.head.appendChild(link);
 });
+
