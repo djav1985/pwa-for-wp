@@ -1,7 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-require_once PWAFORWP_PLUGIN_DIR.'/admin/class-pwaforwp-utility.php';
 
 function pwaforpw_add_menu_links() {
 
